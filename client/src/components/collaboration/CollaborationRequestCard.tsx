@@ -73,8 +73,8 @@ export const CollaborationRequestCard: React.FC<CollaborationRequestCardProps> =
             />
             
             <div>
-              <h3 className="text-md font-semibold text-gray-900">{investor.name}</h3>
-              <p className="text-sm text-gray-500">
+              <h3 className="text-md font-semibold text-ink">{investor.name}</h3>
+              <p className="text-sm text-muted">
                 {formatDistanceToNow(new Date(request.createdAt), { addSuffix: true })}
               </p>
             </div>
@@ -84,11 +84,11 @@ export const CollaborationRequestCard: React.FC<CollaborationRequestCardProps> =
         </div>
         
         <div className="mt-4">
-          <p className="text-sm text-gray-600">{request.message}</p>
+          <p className="text-sm text-muted">{request.message}</p>
         </div>
       </CardBody>
       
-      <CardFooter className="border-t border-gray-100 bg-gray-50">
+      <CardFooter className="border-t border-line bg-paper">
         {request.status === 'pending' ? (
           <div className="flex justify-between w-full">
             <div className="space-x-2">

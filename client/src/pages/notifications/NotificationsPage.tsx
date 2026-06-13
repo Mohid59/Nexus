@@ -51,7 +51,7 @@ export const NotificationsPage: React.FC = () => {
       case 'investment':
         return <DollarSign size={16} className="text-accent-600" />;
       default:
-        return <Bell size={16} className="text-gray-600" />;
+        return <Bell size={16} className="text-muted" />;
     }
   };
   
@@ -59,8 +59,8 @@ export const NotificationsPage: React.FC = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Notifications</h1>
-          <p className="text-gray-600">Stay updated with your network activity</p>
+          <h1 className="text-2xl font-bold text-ink">Notifications</h1>
+          <p className="text-muted">Stay updated with your network activity</p>
         </div>
         
         <Button variant="outline" size="sm">
@@ -86,7 +86,7 @@ export const NotificationsPage: React.FC = () => {
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-ink">
                     {notification.user.name}
                   </span>
                   {notification.unread && (
@@ -94,11 +94,11 @@ export const NotificationsPage: React.FC = () => {
                   )}
                 </div>
                 
-                <p className="text-gray-600 mt-1">
+                <p className="text-muted mt-1">
                   {notification.content}
                 </p>
                 
-                <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                <div className="flex items-center gap-2 mt-2 text-sm text-muted">
                   {getNotificationIcon(notification.type)}
                   <span>{notification.time}</span>
                 </div>

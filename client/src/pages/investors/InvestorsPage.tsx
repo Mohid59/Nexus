@@ -52,8 +52,8 @@ export const InvestorsPage: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Find Investors</h1>
-        <p className="text-gray-600">Connect with investors who match your startup's needs</p>
+        <h1 className="text-2xl font-bold text-ink">Find Investors</h1>
+        <p className="text-muted">Connect with investors who match your startup's needs</p>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -61,11 +61,11 @@ export const InvestorsPage: React.FC = () => {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+              <h2 className="text-lg font-medium text-ink">Filters</h2>
             </CardHeader>
             <CardBody className="space-y-6">
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-2">Investment Stage</h3>
+                <h3 className="text-sm font-medium text-ink mb-2">Investment Stage</h3>
                 <div className="space-y-2">
                   {allStages.map(stage => (
                     <button
@@ -74,7 +74,7 @@ export const InvestorsPage: React.FC = () => {
                       className={`block w-full text-left px-3 py-2 rounded-md text-sm ${
                         selectedStages.includes(stage)
                           ? 'bg-primary-50 text-primary-700'
-                          : 'text-gray-700 hover:bg-gray-50'
+                          : 'text-ink hover:bg-paper'
                       }`}
                     >
                       {stage}
@@ -84,7 +84,7 @@ export const InvestorsPage: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-2">Investment Interests</h3>
+                <h3 className="text-sm font-medium text-ink mb-2">Investment Interests</h3>
                 <div className="flex flex-wrap gap-2">
                   {allInterests.map(interest => (
                     <Badge
@@ -100,17 +100,17 @@ export const InvestorsPage: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-2">Location</h3>
+                <h3 className="text-sm font-medium text-ink mb-2">Location</h3>
                 <div className="space-y-2">
-                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
+                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-paper">
                     <MapPin size={16} className="mr-2" />
                     San Francisco, CA
                   </button>
-                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
+                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-paper">
                     <MapPin size={16} className="mr-2" />
                     New York, NY
                   </button>
-                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
+                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-paper">
                     <MapPin size={16} className="mr-2" />
                     Boston, MA
                   </button>
@@ -132,8 +132,8 @@ export const InvestorsPage: React.FC = () => {
             />
             
             <div className="flex items-center gap-2">
-              <Filter size={18} className="text-gray-500" />
-              <span className="text-sm text-gray-600">
+              <Filter size={18} className="text-muted" />
+              <span className="text-sm text-muted">
                 {filteredInvestors.length} results
               </span>
             </div>

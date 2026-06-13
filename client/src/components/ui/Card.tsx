@@ -37,5 +37,5 @@ export const CardBody: React.FC<CardSectionProps> = ({ children, className = '' 
 );
 
 export const CardFooter: React.FC<CardSectionProps> = ({ children, className = '' }) => (
-  <div className={`px-6 py-4 border-t border-line bg-gray-50/60 ${className}`}>{children}</div>
+  <div className={`px-6 py-4 border-t border-line bg-paper/60 ${className}`}>{children}</div>
 );

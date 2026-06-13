@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, Bell, LogOut, User as UserIcon, Settings, ChevronRight } from 'lucide-react';
+import { Menu, Bell, LogOut, User as UserIcon, Settings, ChevronRight, Sun, Moon } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import { Avatar } from '../ui/Avatar';
 import { Dropdown, DropdownItem, DropdownDivider } from '../ui/Dropdown';
 
@@ -23,6 +24,7 @@ const LABELS: Record<string, string> = {
 
 export const Navbar: React.FC<{ onMenu: () => void }> = ({ onMenu }) => {
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -60,9 +62,17 @@ export const Navbar: React.FC<{ onMenu: () => void }> = ({ onMenu }) => {
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2.5">
+          <button
+            onClick={toggleTheme}
+            className="rounded-lg p-2 text-muted transition-colors hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800"
+            aria-label="Toggle dark mode"
+          >
+            {theme === 'dark' ? <Sun size={19} /> : <Moon size={19} />}
+          </button>
+
           <Link
             to="/notifications"
-            className="relative rounded-lg p-2 text-muted transition-colors hover:bg-gray-100 hover:text-ink"
+            className="relative rounded-lg p-2 text-muted transition-colors hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800"
             aria-label="Notifications"
           >
             <Bell size={19} />

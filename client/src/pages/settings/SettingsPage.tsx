@@ -15,8 +15,8 @@ export const SettingsPage: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-600">Manage your account preferences and settings</p>
+        <h1 className="text-2xl font-bold text-ink">Settings</h1>
+        <p className="text-muted">Manage your account preferences and settings</p>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -29,27 +29,27 @@ export const SettingsPage: React.FC = () => {
                 Profile
               </button>
               
-              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md">
+              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-ink hover:bg-paper rounded-md">
                 <Lock size={18} className="mr-3" />
                 Security
               </button>
               
-              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md">
+              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-ink hover:bg-paper rounded-md">
                 <Bell size={18} className="mr-3" />
                 Notifications
               </button>
               
-              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md">
+              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-ink hover:bg-paper rounded-md">
                 <Globe size={18} className="mr-3" />
                 Language
               </button>
               
-              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md">
+              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-ink hover:bg-paper rounded-md">
                 <Palette size={18} className="mr-3" />
                 Appearance
               </button>
               
-              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md">
+              <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-ink hover:bg-paper rounded-md">
                 <CreditCard size={18} className="mr-3" />
                 Billing
               </button>
@@ -62,7 +62,7 @@ export const SettingsPage: React.FC = () => {
           {/* Profile Settings */}
           <Card>
             <CardHeader>
-              <h2 className="text-lg font-medium text-gray-900">Profile Settings</h2>
+              <h2 className="text-lg font-medium text-ink">Profile Settings</h2>
             </CardHeader>
             <CardBody className="space-y-6">
               <div className="flex items-center gap-6">
@@ -76,7 +76,7 @@ export const SettingsPage: React.FC = () => {
                   <Button variant="outline" size="sm">
                     Change Photo
                   </Button>
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 text-sm text-muted">
                     JPG, GIF or PNG. Max size of 800K
                   </p>
                 </div>
@@ -107,11 +107,11 @@ export const SettingsPage: React.FC = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-ink mb-1">
                   Bio
                 </label>
                 <textarea
-                  className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  className="w-full rounded-md border-line shadow-sm focus:border-primary-500 focus:ring-primary-500"
                   rows={4}
                   defaultValue={user.bio}
                 ></textarea>
@@ -127,14 +127,14 @@ export const SettingsPage: React.FC = () => {
           {/* Security Settings */}
           <Card>
             <CardHeader>
-              <h2 className="text-lg font-medium text-gray-900">Security Settings</h2>
+              <h2 className="text-lg font-medium text-ink">Security Settings</h2>
             </CardHeader>
             <CardBody className="space-y-6">
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-4">Two-Factor Authentication</h3>
+                <h3 className="text-sm font-medium text-ink mb-4">Two-Factor Authentication</h3>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted">
                       Add an extra layer of security to your account
                     </p>
                     <Badge variant="error" className="mt-1">Not Enabled</Badge>
@@ -143,8 +143,8 @@ export const SettingsPage: React.FC = () => {
                 </div>
               </div>
               
-              <div className="pt-6 border-t border-gray-200">
-                <h3 className="text-sm font-medium text-gray-900 mb-4">Change Password</h3>
+              <div className="pt-6 border-t border-line">
+                <h3 className="text-sm font-medium text-ink mb-4">Change Password</h3>
                 <div className="space-y-4">
                   <Input
                     label="Current Password"

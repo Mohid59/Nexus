@@ -32,7 +32,9 @@ const NavRow: React.FC<NavItem & { onNavigate: () => void }> = ({ to, icon, labe
     onClick={onNavigate}
     className={({ isActive }) =>
       `group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-        isActive ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-ink'
+        isActive
+          ? 'bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
+          : 'text-muted hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800'
       }`
     }
   >
@@ -119,7 +121,7 @@ export const Sidebar: React.FC<{ open: boolean; onClose: () => void }> = ({ open
         </nav>
 
         <div className="border-t border-line p-4">
-          <div className="rounded-xl bg-primary-50 p-4">
+          <div className="rounded-xl bg-primary-50 p-4 dark:bg-primary-500/10">
             <p className="text-xs font-medium text-primary-900">Need a hand?</p>
             <p className="mt-0.5 text-xs text-primary-700/80">Our team is here to help you connect.</p>
             <a

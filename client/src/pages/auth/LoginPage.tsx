@@ -54,10 +54,10 @@ export const LoginPage: React.FC = () => {
             </svg>
           </div>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-ink">
           Sign in to Business Nexus
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
+        <p className="mt-2 text-center text-sm text-muted">
           Connect with investors and entrepreneurs
         </p>
       </div>
@@ -73,7 +73,7 @@ export const LoginPage: React.FC = () => {
           
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-ink mb-1">
                 I am a
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -81,8 +81,8 @@ export const LoginPage: React.FC = () => {
                   type="button"
                   className={`py-3 px-4 border rounded-md flex items-center justify-center transition-colors ${
                     role === 'entrepreneur'
-                      ? 'border-primary-500 bg-primary-50 text-primary-700'
-                      : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                      ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
+                      : 'border-line text-ink hover:bg-paper'
                   }`}
                   onClick={() => setRole('entrepreneur')}
                 >
@@ -94,8 +94,8 @@ export const LoginPage: React.FC = () => {
                   type="button"
                   className={`py-3 px-4 border rounded-md flex items-center justify-center transition-colors ${
                     role === 'investor'
-                      ? 'border-primary-500 bg-primary-50 text-primary-700'
-                      : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                      ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
+                      : 'border-line text-ink hover:bg-paper'
                   }`}
                   onClick={() => setRole('investor')}
                 >
@@ -130,9 +130,9 @@ export const LoginPage: React.FC = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-line rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-ink">
                   Remember me
                 </label>
               </div>
@@ -157,10 +157,10 @@ export const LoginPage: React.FC = () => {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-line"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Demo Accounts</span>
+                <span className="px-2 bg-surface text-muted">Demo Accounts</span>
               </div>
             </div>
             
@@ -186,15 +186,15 @@ export const LoginPage: React.FC = () => {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-line"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or</span>
+                <span className="px-2 bg-surface text-muted">Or</span>
               </div>
             </div>
             
             <div className="mt-2 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted">
                 Don't have an account?{' '}
                 <Link to="/register" className="font-medium text-primary-600 hover:text-primary-500">
                   Sign up

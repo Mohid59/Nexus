@@ -62,9 +62,9 @@ export const ChatPage: React.FC = () => {
   if (!currentUser) return null;
   
   return (
-    <div className="flex h-[calc(100vh-4rem)] bg-white border border-gray-200 rounded-lg overflow-hidden animate-fade-in">
+    <div className="flex h-[calc(100vh-4rem)] bg-surface border border-line rounded-lg overflow-hidden animate-fade-in">
       {/* Conversations sidebar */}
-      <div className="hidden md:block w-1/3 lg:w-1/4 border-r border-gray-200">
+      <div className="hidden md:block w-1/3 lg:w-1/4 border-r border-line">
         <ChatUserList conversations={conversations} />
       </div>
       
@@ -73,7 +73,7 @@ export const ChatPage: React.FC = () => {
         {/* Chat header */}
         {chatPartner ? (
           <>
-            <div className="border-b border-gray-200 p-4 flex justify-between items-center">
+            <div className="border-b border-line p-4 flex justify-between items-center">
               <div className="flex items-center">
                 <Avatar
                   src={chatPartner.avatarUrl}
@@ -84,8 +84,8 @@ export const ChatPage: React.FC = () => {
                 />
                 
                 <div>
-                  <h2 className="text-lg font-medium text-gray-900">{chatPartner.name}</h2>
-                  <p className="text-sm text-gray-500">
+                  <h2 className="text-lg font-medium text-ink">{chatPartner.name}</h2>
+                  <p className="text-sm text-muted">
                     {chatPartner.isOnline ? 'Online' : 'Last seen recently'}
                   </p>
                 </div>
@@ -122,7 +122,7 @@ export const ChatPage: React.FC = () => {
             </div>
             
             {/* Messages container */}
-            <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+            <div className="flex-1 p-4 overflow-y-auto bg-paper">
               {messages.length > 0 ? (
                 <div className="space-y-4">
                   {messages.map(message => (
@@ -137,16 +137,16 @@ export const ChatPage: React.FC = () => {
               ) : (
                 <div className="h-full flex flex-col items-center justify-center">
                   <div className="bg-gray-100 p-4 rounded-full mb-4">
-                    <MessageCircle size={32} className="text-gray-400" />
+                    <MessageCircle size={32} className="text-muted" />
                   </div>
-                  <h3 className="text-lg font-medium text-gray-700">No messages yet</h3>
-                  <p className="text-gray-500 mt-1">Send a message to start the conversation</p>
+                  <h3 className="text-lg font-medium text-ink">No messages yet</h3>
+                  <p className="text-muted mt-1">Send a message to start the conversation</p>
                 </div>
               )}
             </div>
             
             {/* Message input */}
-            <div className="border-t border-gray-200 p-4">
+            <div className="border-t border-line p-4">
               <form onSubmit={handleSendMessage} className="flex space-x-2">
                 <Button
                   type="button"
@@ -182,10 +182,10 @@ export const ChatPage: React.FC = () => {
         ) : (
           <div className="h-full flex flex-col items-center justify-center p-4">
             <div className="bg-gray-100 p-6 rounded-full mb-4">
-              <MessageCircle size={48} className="text-gray-400" />
+              <MessageCircle size={48} className="text-muted" />
             </div>
-            <h2 className="text-xl font-medium text-gray-700">Select a conversation</h2>
-            <p className="text-gray-500 mt-2 text-center">
+            <h2 className="text-xl font-medium text-ink">Select a conversation</h2>
+            <p className="text-muted mt-2 text-center">
               Choose a contact from the list to start chatting
             </p>
           </div>

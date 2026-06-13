@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Routing guards
@@ -47,8 +48,9 @@ const RootRedirect: React.FC = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <Toaster
+    <ThemeProvider>
+      <AuthProvider>
+        <Toaster
         position="top-right"
         toastOptions={{
           duration: 3500,
@@ -129,7 +131,8 @@ function App() {
           <Route path="*" element={<RootRedirect />} />
         </Routes>
       </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

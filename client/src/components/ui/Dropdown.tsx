@@ -49,7 +49,7 @@ export const DropdownItem: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement> & { icon?: React.ReactNode }
 > = ({ icon, children, className = '', ...props }) => (
   <button
-    className={`w-full flex items-center gap-2.5 px-4 py-2 text-sm text-ink hover:bg-gray-100 transition-colors text-left ${className}`}
+    className={`w-full flex items-center gap-2.5 px-4 py-2 text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left ${className}`}
     {...props}
   >
     {icon && <span className="text-muted">{icon}</span>}

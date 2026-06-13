@@ -44,8 +44,8 @@ export const DocumentsPage: React.FC = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Documents</h1>
-          <p className="text-gray-600">Manage your startup's important files</p>
+          <h1 className="text-2xl font-bold text-ink">Documents</h1>
+          <p className="text-muted">Manage your startup's important files</p>
         </div>
         
         <Button leftIcon={<Upload size={18} />}>
@@ -57,36 +57,36 @@ export const DocumentsPage: React.FC = () => {
         {/* Storage info */}
         <Card className="lg:col-span-1">
           <CardHeader>
-            <h2 className="text-lg font-medium text-gray-900">Storage</h2>
+            <h2 className="text-lg font-medium text-ink">Storage</h2>
           </CardHeader>
           <CardBody className="space-y-4">
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Used</span>
-                <span className="font-medium text-gray-900">12.5 GB</span>
+                <span className="text-muted">Used</span>
+                <span className="font-medium text-ink">12.5 GB</span>
               </div>
               <div className="h-2 bg-gray-200 rounded-full">
                 <div className="h-2 bg-primary-600 rounded-full" style={{ width: '65%' }}></div>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Available</span>
-                <span className="font-medium text-gray-900">7.5 GB</span>
+                <span className="text-muted">Available</span>
+                <span className="font-medium text-ink">7.5 GB</span>
               </div>
             </div>
             
-            <div className="pt-4 border-t border-gray-200">
-              <h3 className="text-sm font-medium text-gray-900 mb-2">Quick Access</h3>
+            <div className="pt-4 border-t border-line">
+              <h3 className="text-sm font-medium text-ink mb-2">Quick Access</h3>
               <div className="space-y-2">
-                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
                   Recent Files
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
                   Shared with Me
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
                   Starred
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
                   Trash
                 </button>
               </div>
@@ -98,7 +98,7 @@ export const DocumentsPage: React.FC = () => {
         <div className="lg:col-span-3">
           <Card>
             <CardHeader className="flex justify-between items-center">
-              <h2 className="text-lg font-medium text-gray-900">All Documents</h2>
+              <h2 className="text-lg font-medium text-ink">All Documents</h2>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm">
                   Sort by
@@ -113,7 +113,7 @@ export const DocumentsPage: React.FC = () => {
                 {documents.map(doc => (
                   <div
                     key={doc.id}
-                    className="flex items-center p-4 hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                    className="flex items-center p-4 hover:bg-paper rounded-lg transition-colors duration-200"
                   >
                     <div className="p-2 bg-primary-50 rounded-lg mr-4">
                       <FileText size={24} className="text-primary-600" />
@@ -121,7 +121,7 @@ export const DocumentsPage: React.FC = () => {
                     
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-medium text-gray-900 truncate">
+                        <h3 className="text-sm font-medium text-ink truncate">
                           {doc.name}
                         </h3>
                         {doc.shared && (
@@ -129,7 +129,7 @@ export const DocumentsPage: React.FC = () => {
                         )}
                       </div>
                       
-                      <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
+                      <div className="flex items-center gap-4 mt-1 text-sm text-muted">
                         <span>{doc.type}</span>
                         <span>{doc.size}</span>
                         <span>Modified {doc.lastModified}</span>

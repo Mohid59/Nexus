@@ -23,9 +23,9 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
   };
 
   return (
-    <div className="bg-white border-r border-gray-200 w-full md:w-64 overflow-y-auto">
+    <div className="bg-surface border-r border-line w-full md:w-64 overflow-y-auto">
       <div className="py-4">
-        <h2 className="px-4 text-lg font-semibold text-gray-800 mb-4">Messages</h2>
+        <h2 className="px-4 text-lg font-semibold text-ink mb-4">Messages</h2>
         
         <div className="space-y-1">
           {conversations.length > 0 ? (
@@ -46,7 +46,7 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
                   className={`px-4 py-3 flex cursor-pointer transition-colors duration-200 ${
                     isActive
                       ? 'bg-primary-50 border-l-4 border-primary-600'
-                      : 'hover:bg-gray-50 border-l-4 border-transparent'
+                      : 'hover:bg-paper border-l-4 border-transparent'
                   }`}
                   onClick={() => handleSelectUser(otherUser.id)}
                 >
@@ -60,12 +60,12 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
                   
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-baseline">
-                      <h3 className="text-sm font-medium text-gray-900 truncate">
+                      <h3 className="text-sm font-medium text-ink truncate">
                         {otherUser.name}
                       </h3>
                       
                       {lastMessage && (
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-muted">
                           {formatDistanceToNow(new Date(lastMessage.timestamp), { addSuffix: false })}
                         </span>
                       )}
@@ -73,7 +73,7 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
                     
                     <div className="flex justify-between items-center mt-1">
                       {lastMessage && (
-                        <p className="text-xs text-gray-600 truncate">
+                        <p className="text-xs text-muted truncate">
                           {lastMessage.senderId === currentUser.id ? 'You: ' : ''}
                           {lastMessage.content}
                         </p>
@@ -89,7 +89,7 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
             })
           ) : (
             <div className="px-4 py-8 text-center">
-              <p className="text-sm text-gray-500">No conversations yet</p>
+              <p className="text-sm text-muted">No conversations yet</p>
             </div>
           )}
         </div>

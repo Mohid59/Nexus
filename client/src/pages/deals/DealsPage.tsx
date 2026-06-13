@@ -83,8 +83,8 @@ export const DealsPage: React.FC = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Investment Deals</h1>
-          <p className="text-gray-600">Track and manage your investment pipeline</p>
+          <h1 className="text-2xl font-bold text-ink">Investment Deals</h1>
+          <p className="text-muted">Track and manage your investment pipeline</p>
         </div>
         
         <Button>
@@ -101,8 +101,8 @@ export const DealsPage: React.FC = () => {
                 <DollarSign size={20} className="text-primary-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Investment</p>
-                <p className="text-lg font-semibold text-gray-900">$4.3M</p>
+                <p className="text-sm text-muted">Total Investment</p>
+                <p className="text-lg font-semibold text-ink">$4.3M</p>
               </div>
             </div>
           </CardBody>
@@ -115,8 +115,8 @@ export const DealsPage: React.FC = () => {
                 <TrendingUp size={20} className="text-secondary-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Active Deals</p>
-                <p className="text-lg font-semibold text-gray-900">8</p>
+                <p className="text-sm text-muted">Active Deals</p>
+                <p className="text-lg font-semibold text-ink">8</p>
               </div>
             </div>
           </CardBody>
@@ -129,8 +129,8 @@ export const DealsPage: React.FC = () => {
                 <Users size={20} className="text-accent-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Portfolio Companies</p>
-                <p className="text-lg font-semibold text-gray-900">12</p>
+                <p className="text-sm text-muted">Portfolio Companies</p>
+                <p className="text-lg font-semibold text-ink">12</p>
               </div>
             </div>
           </CardBody>
@@ -143,8 +143,8 @@ export const DealsPage: React.FC = () => {
                 <Calendar size={20} className="text-success-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Closed This Month</p>
-                <p className="text-lg font-semibold text-gray-900">2</p>
+                <p className="text-sm text-muted">Closed This Month</p>
+                <p className="text-lg font-semibold text-ink">2</p>
               </div>
             </div>
           </CardBody>
@@ -165,7 +165,7 @@ export const DealsPage: React.FC = () => {
         
         <div className="w-full md:w-1/3">
           <div className="flex items-center gap-2">
-            <Filter size={18} className="text-gray-500" />
+            <Filter size={18} className="text-muted" />
             <div className="flex flex-wrap gap-2">
               {statuses.map(status => (
                 <Badge
@@ -185,39 +185,39 @@ export const DealsPage: React.FC = () => {
       {/* Deals table */}
       <Card>
         <CardHeader>
-          <h2 className="text-lg font-medium text-gray-900">Active Deals</h2>
+          <h2 className="text-lg font-medium text-ink">Active Deals</h2>
         </CardHeader>
         <CardBody>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <tr className="border-b border-line">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                     Startup
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                     Amount
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                     Equity
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                     Stage
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                     Last Activity
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-muted uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-line">
                 {deals.map(deal => (
-                  <tr key={deal.id} className="hover:bg-gray-50">
+                  <tr key={deal.id} className="hover:bg-paper">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <Avatar
@@ -227,20 +227,20 @@ export const DealsPage: React.FC = () => {
                           className="flex-shrink-0"
                         />
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm font-medium text-ink">
                             {deal.startup.name}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-muted">
                             {deal.startup.industry}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{deal.amount}</div>
+                      <div className="text-sm text-ink">{deal.amount}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{deal.equity}</div>
+                      <div className="text-sm text-ink">{deal.equity}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Badge variant={getStatusColor(deal.status)}>
@@ -248,10 +248,10 @@ export const DealsPage: React.FC = () => {
                       </Badge>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{deal.stage}</div>
+                      <div className="text-sm text-ink">{deal.stage}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-muted">
                         {new Date(deal.lastActivity).toLocaleDateString()}
                       </div>
                     </td>
