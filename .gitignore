@@ -12,6 +12,24 @@ dist
 dist-ssr
 *.local
 
+# Env files (commit only *.env.example)
+.env
+.env.*
+!.env.example
+client/.env
+client/.env.*
+!client/.env.example
+server/.env
+server/.env.*
+!server/.env.example
+
+# Backend build + uploads
+server/dist
+server/uploads
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +40,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.gstack/
