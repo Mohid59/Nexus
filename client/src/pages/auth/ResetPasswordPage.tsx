@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Lock } from 'lucide-react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { Lock, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { AuthLayout } from '../../components/layout/AuthLayout';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 
@@ -11,102 +12,72 @@ export const ResetPasswordPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  
+
   const { resetPassword } = useAuth();
   const token = searchParams.get('token');
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!token) {
-      return;
-    }
-    
-    if (password !== confirmPassword) {
-      return;
-    }
-    
+    if (!token || password !== confirmPassword) return;
     setIsLoading(true);
-    
     try {
       await resetPassword(token, password);
       navigate('/login');
     } catch {
-      // Error is handled (toast) by the AuthContext
+      // Error is surfaced (toast) by the AuthContext
     } finally {
       setIsLoading(false);
     }
   };
-  
+
   if (!token) {
     return (
-      <div className="min-h-screen bg-paper flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-ink">
-              Invalid reset link
-            </h2>
-            <p className="mt-2 text-sm text-muted">
-              This password reset link is invalid or has expired.
-            </p>
-            <Button
-              className="mt-4"
-              onClick={() => navigate('/forgot-password')}
-            >
-              Request new reset link
-            </Button>
-          </div>
-        </div>
-      </div>
+      <AuthLayout>
+        <h2 className="display-xl text-3xl font-semibold text-ink">Invalid reset link</h2>
+        <p className="mt-2 text-muted">This password reset link is invalid or has expired.</p>
+        <Button className="mt-6" onClick={() => navigate('/forgot-password')}>
+          Request a new link
+        </Button>
+      </AuthLayout>
     );
   }
-  
+
   return (
-    <div className="min-h-screen bg-paper flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="text-center">
-          <Lock className="mx-auto h-12 w-12 text-primary-600" />
-          <h2 className="mt-6 text-3xl font-extrabold text-ink">
-            Reset your password
-          </h2>
-          <p className="mt-2 text-sm text-muted">
-            Enter your new password below
-          </p>
-        </div>
-        
-        <div className="mt-8 bg-surface py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <Input
-              label="New password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<Lock size={18} />}
-            />
-            
-            <Input
-              label="Confirm new password"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<Lock size={18} />}
-              error={password !== confirmPassword ? 'Passwords do not match' : undefined}
-            />
-            
-            <Button
-              type="submit"
-              fullWidth
-              isLoading={isLoading}
-            >
-              Reset password
-            </Button>
-          </form>
-        </div>
-      </div>
-    </div>
+    <AuthLayout>
+      <h2 className="display-xl text-4xl font-semibold text-ink">Set a new password</h2>
+      <p className="mt-2 text-muted">Choose a strong password for your account.</p>
+
+      <form className="mt-7 space-y-5" onSubmit={handleSubmit}>
+        <Input
+          label="New password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          fullWidth
+          startAdornment={<Lock size={18} />}
+        />
+        <Input
+          label="Confirm new password"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          fullWidth
+          startAdornment={<Lock size={18} />}
+          error={confirmPassword && password !== confirmPassword ? 'Passwords do not match' : undefined}
+        />
+        <Button type="submit" fullWidth size="lg" isLoading={isLoading}>
+          Reset password
+        </Button>
+      </form>
+
+      <Link
+        to="/login"
+        className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300"
+      >
+        <ArrowLeft size={16} /> Back to sign in
+      </Link>
+    </AuthLayout>
   );
 };

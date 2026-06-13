@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, CircleDollarSign, Building2, AlertCircle } from 'lucide-react';
+import { User, Mail, Lock, CircleDollarSign, Building2, AlertCircle, UserPlus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { AuthLayout } from '../../components/layout/AuthLayout';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { UserRole } from '../../types';
@@ -14,184 +15,122 @@ export const RegisterPage: React.FC = () => {
   const [role, setRole] = useState<UserRole>('entrepreneur');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { register } = useAuth();
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    
-    // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
     setIsLoading(true);
-    
     try {
       await register(name, email, password, role);
-      // Redirect based on user role
       navigate(role === 'entrepreneur' ? '/dashboard/entrepreneur' : '/dashboard/investor');
     } catch (err) {
       setError((err as Error).message);
       setIsLoading(false);
     }
   };
-  
-  return (
-    <div className="min-h-screen bg-app flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <div className="w-12 h-12 bg-primary-700 rounded-xl shadow-soft flex items-center justify-center">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
-              <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M16 21V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-ink">
-          Create your account
-        </h2>
-        <p className="mt-2 text-center text-sm text-muted">
-          Join Business Nexus to connect with partners
-        </p>
-      </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-surface py-8 px-6 shadow-card rounded-2xl border border-line sm:px-10">
-          {error && (
-            <div className="mb-4 bg-error-50 dark:bg-error-500/10 border border-error-500 text-error-700 px-4 py-3 rounded-md flex items-start">
-              <AlertCircle size={18} className="mr-2 mt-0.5" />
-              <span>{error}</span>
-            </div>
-          )}
-          
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label className="block text-sm font-medium text-ink mb-1">
-                I am registering as a
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  className={`py-3 px-4 border rounded-md flex items-center justify-center transition-colors ${
-                    role === 'entrepreneur'
-                      ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
-                      : 'border-line text-ink hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                  onClick={() => setRole('entrepreneur')}
-                >
-                  <Building2 size={18} className="mr-2" />
-                  Entrepreneur
-                </button>
-                
-                <button
-                  type="button"
-                  className={`py-3 px-4 border rounded-md flex items-center justify-center transition-colors ${
-                    role === 'investor'
-                      ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
-                      : 'border-line text-ink hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                  onClick={() => setRole('investor')}
-                >
-                  <CircleDollarSign size={18} className="mr-2" />
-                  Investor
-                </button>
-              </div>
-            </div>
-            
-            <Input
-              label="Full name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<User size={18} />}
-            />
-            
-            <Input
-              label="Email address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<Mail size={18} />}
-            />
-            
-            <Input
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<Lock size={18} />}
-            />
-            
-            <Input
-              label="Confirm password"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<Lock size={18} />}
-            />
-            
-            <div className="flex items-center">
-              <input
-                id="terms"
-                name="terms"
-                type="checkbox"
-                required
-                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-line rounded"
-              />
-              <label htmlFor="terms" className="ml-2 block text-sm text-ink">
-                I agree to the{' '}
-                <a href="#" className="font-medium text-primary-600 hover:text-primary-500">
-                  Terms of Service
-                </a>{' '}
-                and{' '}
-                <a href="#" className="font-medium text-primary-600 hover:text-primary-500">
-                  Privacy Policy
-                </a>
-              </label>
-            </div>
-            
-            <Button
-              type="submit"
-              fullWidth
-              isLoading={isLoading}
-            >
-              Create account
-            </Button>
-          </form>
-          
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-line"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-surface text-muted">Or</span>
-              </div>
-            </div>
-            
-            <div className="mt-2 text-center">
-              <p className="text-sm text-muted">
-                Already have an account?{' '}
-                <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500">
-                  Sign in
-                </Link>
-              </p>
-            </div>
+  const roleButton = (value: UserRole, Icon: typeof Building2, label: string) => (
+    <button
+      type="button"
+      onClick={() => setRole(value)}
+      className={`flex items-center justify-center gap-2 rounded-lg border py-3 px-4 text-sm font-medium transition-colors ${
+        role === value
+          ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
+          : 'border-line text-ink hover:bg-gray-100 dark:hover:bg-gray-800'
+      }`}
+    >
+      <Icon size={18} />
+      {label}
+    </button>
+  );
+
+  return (
+    <AuthLayout>
+      <h2 className="display-xl text-4xl font-semibold text-ink">Create your account</h2>
+      <p className="mt-2 text-muted">Join Business Nexus to connect with partners.</p>
+
+      {error && (
+        <div className="mt-6 flex items-start gap-2 rounded-lg border border-error-500/40 bg-error-50 px-4 py-3 text-error-700 dark:bg-error-500/10">
+          <AlertCircle size={18} className="mt-0.5 shrink-0" />
+          <span className="text-sm">{error}</span>
+        </div>
+      )}
+
+      <form className="mt-7 space-y-5" onSubmit={handleSubmit}>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-ink">I am registering as a</label>
+          <div className="grid grid-cols-2 gap-3">
+            {roleButton('entrepreneur', Building2, 'Entrepreneur')}
+            {roleButton('investor', CircleDollarSign, 'Investor')}
           </div>
         </div>
-      </div>
-    </div>
+
+        <Input
+          label="Full name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          fullWidth
+          startAdornment={<User size={18} />}
+        />
+        <Input
+          label="Email address"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          fullWidth
+          startAdornment={<Mail size={18} />}
+        />
+        <Input
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          fullWidth
+          startAdornment={<Lock size={18} />}
+        />
+        <Input
+          label="Confirm password"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          fullWidth
+          startAdornment={<Lock size={18} />}
+          error={confirmPassword && password !== confirmPassword ? 'Passwords do not match' : undefined}
+        />
+
+        <label className="flex items-start gap-2 text-sm text-ink">
+          <input type="checkbox" required className="mt-0.5 h-4 w-4 rounded border-line text-primary-600 focus:ring-primary-500" />
+          <span>
+            I agree to the{' '}
+            <a href="#" className="font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300">Terms of Service</a>{' '}
+            and{' '}
+            <a href="#" className="font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300">Privacy Policy</a>
+          </span>
+        </label>
+
+        <Button type="submit" fullWidth size="lg" isLoading={isLoading} leftIcon={<UserPlus size={18} />}>
+          Create account
+        </Button>
+      </form>
+
+      <p className="mt-8 text-center text-sm text-muted">
+        Already have an account?{' '}
+        <Link to="/login" className="font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300">
+          Sign in
+        </Link>
+      </p>
+    </AuthLayout>
   );
 };
