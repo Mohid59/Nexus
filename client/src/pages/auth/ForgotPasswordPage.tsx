@@ -19,8 +19,8 @@ export const ForgotPasswordPage: React.FC = () => {
     try {
       await forgotPassword(email);
       setIsSubmitted(true);
-    } catch (error) {
-      // Error is handled by the AuthContext
+    } catch {
+      // Error is handled (toast) by the AuthContext
     } finally {
       setIsLoading(false);
     }

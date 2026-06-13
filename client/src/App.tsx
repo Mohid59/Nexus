@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Routing guards
@@ -47,6 +48,23 @@ const RootRedirect: React.FC = () => {
 function App() {
   return (
     <AuthProvider>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3500,
+          style: {
+            background: '#FFFFFF',
+            color: '#1C1B22',
+            border: '1px solid #E6E4DC',
+            borderRadius: '0.75rem',
+            boxShadow: '0 18px 40px -16px rgba(28,27,34,0.22)',
+            fontSize: '0.875rem',
+            padding: '10px 14px',
+          },
+          success: { iconTheme: { primary: '#0F766E', secondary: '#FFFFFF' } },
+          error: { iconTheme: { primary: '#DC2626', secondary: '#FFFFFF' } },
+        }}
+      />
       <Router>
         <Routes>
           {/* Public routes */}

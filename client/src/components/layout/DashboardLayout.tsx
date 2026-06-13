@@ -1,33 +1,20 @@
-import React from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 
 export const DashboardLayout: React.FC = () => {
-  const { user, isAuthenticated, isLoading } = useAuth();
-  
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
-      </div>
-    );
-  }
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navbar />
-      
-      <div className="flex-1 flex overflow-hidden">
-        <Sidebar />
-        
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-app">
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+      <div className="lg:pl-64 flex flex-col min-h-screen">
+        <Navbar onMenu={() => setSidebarOpen(true)} />
+
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+          <div className="mx-auto max-w-7xl animate-fade-in">
             <Outlet />
           </div>
         </main>

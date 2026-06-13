@@ -7,7 +7,7 @@ import { Input } from '../../components/ui/Input';
 import { ChatMessage } from '../../components/chat/ChatMessage';
 import { ChatUserList } from '../../components/chat/ChatUserList';
 import { useAuth } from '../../context/AuthContext';
-import { Message } from '../../types';
+import { Message, ChatConversation } from '../../types';
 import { findUserById } from '../../data/users';
 import { getMessagesBetweenUsers, sendMessage, getConversationsForUser } from '../../data/messages';
 import { MessageCircle } from 'lucide-react';
@@ -17,7 +17,7 @@ export const ChatPage: React.FC = () => {
   const { user: currentUser } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [conversations, setConversations] = useState<any[]>([]);
+  const [conversations, setConversations] = useState<ChatConversation[]>([]);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   
   const chatPartner = userId ? findUserById(userId) : null;

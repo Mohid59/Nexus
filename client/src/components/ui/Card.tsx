@@ -7,18 +7,15 @@ interface CardProps {
   hoverable?: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({
-  children,
-  className = '',
-  onClick,
-  hoverable = false,
-}) => {
-  const hoverableClass = hoverable ? 'transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer' : '';
-  const clickableClass = onClick ? 'cursor-pointer' : '';
-  
+export const Card: React.FC<CardProps> = ({ children, className = '', onClick, hoverable = false }) => {
+  const interactive = hoverable || onClick;
+  const interactiveClass = interactive
+    ? 'transition-all duration-300 hover:shadow-lift hover:-translate-y-0.5 cursor-pointer'
+    : '';
+
   return (
-    <div 
-      className={`bg-white rounded-lg shadow-md overflow-hidden ${hoverableClass} ${clickableClass} ${className}`}
+    <div
+      className={`bg-surface rounded-2xl border border-line shadow-card overflow-hidden ${interactiveClass} ${className}`}
       onClick={onClick}
     >
       {children}
@@ -26,50 +23,19 @@ export const Card: React.FC<CardProps> = ({
   );
 };
 
-interface CardHeaderProps {
+interface CardSectionProps {
   children: React.ReactNode;
   className?: string;
 }
 
-export const CardHeader: React.FC<CardHeaderProps> = ({
-  children,
-  className = '',
-}) => {
-  return (
-    <div className={`px-6 py-4 border-b border-gray-200 ${className}`}>
-      {children}
-    </div>
-  );
-};
+export const CardHeader: React.FC<CardSectionProps> = ({ children, className = '' }) => (
+  <div className={`px-6 py-5 border-b border-line ${className}`}>{children}</div>
+);
 
-interface CardBodyProps {
-  children: React.ReactNode;
-  className?: string;
-}
+export const CardBody: React.FC<CardSectionProps> = ({ children, className = '' }) => (
+  <div className={`px-6 py-5 ${className}`}>{children}</div>
+);
 
-export const CardBody: React.FC<CardBodyProps> = ({
-  children,
-  className = '',
-}) => {
-  return (
-    <div className={`px-6 py-4 ${className}`}>
-      {children}
-    </div>
-  );
-};
-
-interface CardFooterProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-export const CardFooter: React.FC<CardFooterProps> = ({
-  children,
-  className = '',
-}) => {
-  return (
-    <div className={`px-6 py-4 border-t border-gray-200 ${className}`}>
-      {children}
-    </div>
-  );
-};
+export const CardFooter: React.FC<CardSectionProps> = ({ children, className = '' }) => (
+  <div className={`px-6 py-4 border-t border-line bg-gray-50/60 ${className}`}>{children}</div>
+);
