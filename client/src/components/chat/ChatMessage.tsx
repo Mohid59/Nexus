@@ -32,7 +32,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isCurrentUser
           className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
             isCurrentUser
               ? 'bg-primary-600 text-white rounded-br-none'
-              : 'bg-gray-100 text-ink rounded-bl-none'
+              : 'bg-gray-100 dark:bg-gray-800 text-ink rounded-bl-none'
           }`}
         >
           <p className="text-sm">{message.content}</p>

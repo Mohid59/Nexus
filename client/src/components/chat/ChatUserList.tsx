@@ -45,8 +45,8 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
                   key={conversation.id}
                   className={`px-4 py-3 flex cursor-pointer transition-colors duration-200 ${
                     isActive
-                      ? 'bg-primary-50 border-l-4 border-primary-600'
-                      : 'hover:bg-paper border-l-4 border-transparent'
+                      ? 'bg-primary-50 dark:bg-primary-500/10 border-l-4 border-primary-600'
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-800 border-l-4 border-transparent'
                   }`}
                   onClick={() => handleSelectUser(otherUser.id)}
                 >

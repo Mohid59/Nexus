@@ -266,15 +266,15 @@ export const EntrepreneurProfile: React.FC = () => {
                   <div className="mt-2 space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium">Pre-seed</span>
-                      <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Completed</span>
+                      <span className="text-xs bg-success-100 text-success-700 dark:bg-success-500/20 dark:text-success-500 px-2 py-0.5 rounded-full">Completed</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium">Seed</span>
-                      <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Completed</span>
+                      <span className="text-xs bg-success-100 text-success-700 dark:bg-success-500/20 dark:text-success-500 px-2 py-0.5 rounded-full">Completed</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium">Series A</span>
-                      <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">In Progress</span>
+                      <span className="text-xs bg-warning-100 text-warning-700 dark:bg-warning-500/20 dark:text-warning-500 px-2 py-0.5 rounded-full">In Progress</span>
                     </div>
                   </div>
                 </div>
@@ -289,8 +289,8 @@ export const EntrepreneurProfile: React.FC = () => {
             </CardHeader>
             <CardBody>
               <div className="space-y-3">
-                <div className="flex items-center p-3 border border-line rounded-md hover:bg-paper transition-colors">
-                  <div className="p-2 bg-primary-50 rounded-md mr-3">
+                <div className="flex items-center p-3 border border-line rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <div className="p-2 bg-primary-50 dark:bg-primary-500/10 rounded-md mr-3">
                     <FileText size={18} className="text-primary-700" />
                   </div>
                   <div className="flex-1">
@@ -300,8 +300,8 @@ export const EntrepreneurProfile: React.FC = () => {
                   <Button variant="outline" size="sm">View</Button>
                 </div>
                 
-                <div className="flex items-center p-3 border border-line rounded-md hover:bg-paper transition-colors">
-                  <div className="p-2 bg-primary-50 rounded-md mr-3">
+                <div className="flex items-center p-3 border border-line rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <div className="p-2 bg-primary-50 dark:bg-primary-500/10 rounded-md mr-3">
                     <FileText size={18} className="text-primary-700" />
                   </div>
                   <div className="flex-1">
@@ -311,8 +311,8 @@ export const EntrepreneurProfile: React.FC = () => {
                   <Button variant="outline" size="sm">View</Button>
                 </div>
                 
-                <div className="flex items-center p-3 border border-line rounded-md hover:bg-paper transition-colors">
-                  <div className="p-2 bg-primary-50 rounded-md mr-3">
+                <div className="flex items-center p-3 border border-line rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <div className="p-2 bg-primary-50 dark:bg-primary-500/10 rounded-md mr-3">
                     <FileText size={18} className="text-primary-700" />
                   </div>
                   <div className="flex-1">

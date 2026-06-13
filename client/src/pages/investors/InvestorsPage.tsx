@@ -73,8 +73,8 @@ export const InvestorsPage: React.FC = () => {
                       onClick={() => toggleStage(stage)}
                       className={`block w-full text-left px-3 py-2 rounded-md text-sm ${
                         selectedStages.includes(stage)
-                          ? 'bg-primary-50 text-primary-700'
-                          : 'text-ink hover:bg-paper'
+                          ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-700'
+                          : 'text-ink hover:bg-gray-100 dark:hover:bg-gray-800'
                       }`}
                     >
                       {stage}
@@ -102,15 +102,15 @@ export const InvestorsPage: React.FC = () => {
               <div>
                 <h3 className="text-sm font-medium text-ink mb-2">Location</h3>
                 <div className="space-y-2">
-                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-paper">
+                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800">
                     <MapPin size={16} className="mr-2" />
                     San Francisco, CA
                   </button>
-                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-paper">
+                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800">
                     <MapPin size={16} className="mr-2" />
                     New York, NY
                   </button>
-                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-paper">
+                  <button className="flex items-center w-full text-left px-3 py-2 rounded-md text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800">
                     <MapPin size={16} className="mr-2" />
                     Boston, MA
                   </button>

@@ -44,7 +44,7 @@ export const HelpPage: React.FC = () => {
         {/* Quick links */}
         <Card>
           <CardBody className="text-center p-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-50 rounded-lg mb-4">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-50 dark:bg-primary-500/10 rounded-lg mb-4">
               <Book size={24} className="text-primary-600" />
             </div>
             <h2 className="text-lg font-medium text-ink">Documentation</h2>
@@ -63,7 +63,7 @@ export const HelpPage: React.FC = () => {
         
         <Card>
           <CardBody className="text-center p-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-50 rounded-lg mb-4">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-50 dark:bg-primary-500/10 rounded-lg mb-4">
               <MessageCircle size={24} className="text-primary-600" />
             </div>
             <h2 className="text-lg font-medium text-ink">Live Chat</h2>
@@ -78,7 +78,7 @@ export const HelpPage: React.FC = () => {
         
         <Card>
           <CardBody className="text-center p-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-50 rounded-lg mb-4">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-50 dark:bg-primary-500/10 rounded-lg mb-4">
               <Phone size={24} className="text-primary-600" />
             </div>
             <h2 className="text-lg font-medium text-ink">Contact Us</h2>

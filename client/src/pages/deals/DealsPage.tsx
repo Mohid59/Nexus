@@ -217,7 +217,7 @@ export const DealsPage: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-line">
                 {deals.map(deal => (
-                  <tr key={deal.id} className="hover:bg-paper">
+                  <tr key={deal.id} className="hover:bg-gray-100 dark:hover:bg-gray-800">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <Avatar

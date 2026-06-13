@@ -159,7 +159,7 @@ export const InvestorProfile: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {investor.portfolioCompanies.map((company, index) => (
                   <div key={index} className="flex items-center p-3 border border-line rounded-md">
-                    <div className="p-3 bg-primary-50 rounded-md mr-3">
+                    <div className="p-3 bg-primary-50 dark:bg-primary-500/10 rounded-md mr-3">
                       <Briefcase size={18} className="text-primary-700" />
                     </div>
                     <div>

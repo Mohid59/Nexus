@@ -136,7 +136,7 @@ export const ChatPage: React.FC = () => {
                 </div>
               ) : (
                 <div className="h-full flex flex-col items-center justify-center">
-                  <div className="bg-gray-100 p-4 rounded-full mb-4">
+                  <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-full mb-4">
                     <MessageCircle size={32} className="text-muted" />
                   </div>
                   <h3 className="text-lg font-medium text-ink">No messages yet</h3>
@@ -181,7 +181,7 @@ export const ChatPage: React.FC = () => {
           </>
         ) : (
           <div className="h-full flex flex-col items-center justify-center p-4">
-            <div className="bg-gray-100 p-6 rounded-full mb-4">
+            <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-full mb-4">
               <MessageCircle size={48} className="text-muted" />
             </div>
             <h2 className="text-xl font-medium text-ink">Select a conversation</h2>

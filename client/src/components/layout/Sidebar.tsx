@@ -94,7 +94,7 @@ export const Sidebar: React.FC<{ open: boolean; onClose: () => void }> = ({ open
           <BrandMark />
           <button
             onClick={onClose}
-            className="rounded-md p-1 text-muted hover:bg-gray-100 hover:text-ink lg:hidden"
+            className="rounded-md p-1 text-muted hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 lg:hidden"
             aria-label="Close menu"
           >
             <X size={18} />
@@ -121,12 +121,12 @@ export const Sidebar: React.FC<{ open: boolean; onClose: () => void }> = ({ open
         </nav>
 
         <div className="border-t border-line p-4">
-          <div className="rounded-xl bg-primary-50 p-4 dark:bg-primary-500/10">
-            <p className="text-xs font-medium text-primary-900">Need a hand?</p>
-            <p className="mt-0.5 text-xs text-primary-700/80">Our team is here to help you connect.</p>
+          <div className="rounded-xl bg-primary-50 dark:bg-primary-500/10 p-4">
+            <p className="text-xs font-medium text-primary-900 dark:text-primary-200">Need a hand?</p>
+            <p className="mt-0.5 text-xs text-primary-700/80 dark:text-primary-300/80">Our team is here to help you connect.</p>
             <a
               href="mailto:support@businessnexus.com"
-              className="mt-2 inline-block text-xs font-semibold text-primary-700 hover:text-primary-800"
+              className="mt-2 inline-block text-xs font-semibold text-primary-700 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200"
             >
               support@businessnexus.com
             </a>

@@ -44,7 +44,7 @@ export const Navbar: React.FC<{ onMenu: () => void }> = ({ onMenu }) => {
         <div className="flex min-w-0 items-center gap-3">
           <button
             onClick={onMenu}
-            className="rounded-md p-1.5 text-muted hover:bg-gray-100 hover:text-ink lg:hidden"
+            className="rounded-md p-1.5 text-muted hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 lg:hidden"
             aria-label="Open menu"
           >
             <Menu size={20} />
@@ -81,7 +81,7 @@ export const Navbar: React.FC<{ onMenu: () => void }> = ({ onMenu }) => {
 
           <Dropdown
             trigger={
-              <span className="flex items-center gap-2 rounded-lg py-1 pl-1 pr-2 transition-colors hover:bg-gray-100">
+              <span className="flex items-center gap-2 rounded-lg py-1 pl-1 pr-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">
                 <Avatar src={user.avatarUrl} alt={user.name} size="sm" status={user.isOnline ? 'online' : 'offline'} />
                 <span className="hidden max-w-[10rem] truncate text-sm font-medium text-ink sm:block">{user.name}</span>
               </span>

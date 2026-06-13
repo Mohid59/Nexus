@@ -77,16 +77,16 @@ export const DocumentsPage: React.FC = () => {
             <div className="pt-4 border-t border-line">
               <h3 className="text-sm font-medium text-ink mb-2">Quick Access</h3>
               <div className="space-y-2">
-                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                   Recent Files
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                   Shared with Me
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                   Starred
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-paper rounded-md">
+                <button className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                   Trash
                 </button>
               </div>
@@ -113,9 +113,9 @@ export const DocumentsPage: React.FC = () => {
                 {documents.map(doc => (
                   <div
                     key={doc.id}
-                    className="flex items-center p-4 hover:bg-paper rounded-lg transition-colors duration-200"
+                    className="flex items-center p-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
                   >
-                    <div className="p-2 bg-primary-50 rounded-lg mr-4">
+                    <div className="p-2 bg-primary-50 dark:bg-primary-500/10 rounded-lg mr-4">
                       <FileText size={24} className="text-primary-600" />
                     </div>
                     

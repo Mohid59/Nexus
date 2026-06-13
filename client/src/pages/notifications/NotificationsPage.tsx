@@ -73,7 +73,7 @@ export const NotificationsPage: React.FC = () => {
           <Card
             key={notification.id}
             className={`transition-colors duration-200 ${
-              notification.unread ? 'bg-primary-50' : ''
+              notification.unread ? 'bg-primary-50 dark:bg-primary-500/10' : ''
             }`}
           >
             <CardBody className="flex items-start p-4">

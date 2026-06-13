@@ -11,7 +11,7 @@ export interface EmptyStateProps {
 export const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, action, className = '' }) => (
   <div className={`flex flex-col items-center justify-center text-center py-14 px-6 ${className}`}>
     {icon && (
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-50 text-primary-700">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-50 dark:bg-primary-500/10 text-primary-700">
         {icon}
       </div>
     )}

@@ -62,7 +62,7 @@ export const RegisterPage: React.FC = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-surface py-8 px-6 shadow-card rounded-2xl border border-line sm:px-10">
           {error && (
-            <div className="mb-4 bg-error-50 border border-error-500 text-error-700 px-4 py-3 rounded-md flex items-start">
+            <div className="mb-4 bg-error-50 dark:bg-error-500/10 border border-error-500 text-error-700 px-4 py-3 rounded-md flex items-start">
               <AlertCircle size={18} className="mr-2 mt-0.5" />
               <span>{error}</span>
             </div>
@@ -79,7 +79,7 @@ export const RegisterPage: React.FC = () => {
                   className={`py-3 px-4 border rounded-md flex items-center justify-center transition-colors ${
                     role === 'entrepreneur'
                       ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
-                      : 'border-line text-ink hover:bg-paper'
+                      : 'border-line text-ink hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                   onClick={() => setRole('entrepreneur')}
                 >
@@ -92,7 +92,7 @@ export const RegisterPage: React.FC = () => {
                   className={`py-3 px-4 border rounded-md flex items-center justify-center transition-colors ${
                     role === 'investor'
                       ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300'
-                      : 'border-line text-ink hover:bg-paper'
+                      : 'border-line text-ink hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                   onClick={() => setRole('investor')}
                 >
