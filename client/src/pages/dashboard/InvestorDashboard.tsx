@@ -41,14 +41,19 @@ export const InvestorDashboard: React.FC = () => {
 
   return (
     <div className="space-y-7 animate-fade-in">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-ink sm:text-3xl">Discover Startups</h1>
-          <p className="mt-1 text-muted">Find and connect with promising entrepreneurs.</p>
+      <div className="relative overflow-hidden rounded-3xl border border-line bg-surface hero-band p-7 sm:p-9">
+        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-secondary-700 dark:text-secondary-300">
+              Investor
+            </p>
+            <h1 className="display-xl mt-2 text-4xl font-semibold text-ink sm:text-5xl">Discover Startups</h1>
+            <p className="mt-3 max-w-md text-muted">Find and connect with promising entrepreneurs.</p>
+          </div>
+          <Link to="/entrepreneurs" className="shrink-0">
+            <Button size="lg" leftIcon={<PlusCircle size={18} />}>View All Startups</Button>
+          </Link>
         </div>
-        <Link to="/entrepreneurs">
-          <Button leftIcon={<PlusCircle size={18} />}>View All Startups</Button>
-        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

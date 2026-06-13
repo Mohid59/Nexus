@@ -72,4 +72,34 @@
       radial-gradient(60rem 60rem at 110% -10%, rgb(var(--primary-700, 49 46 129) / 0.05), transparent 60%),
       radial-gradient(50rem 50rem at -10% 110%, rgba(15, 118, 110, 0.05), transparent 55%);
   }
+
+  /* Dramatic brand panel — deep indigo with teal + copper light leaks */
+  .bg-brand-panel {
+    background-color: #161335;
+    background-image:
+      radial-gradient(42rem 42rem at 12% 6%, rgba(99, 102, 241, 0.55), transparent 55%),
+      radial-gradient(38rem 38rem at 98% 96%, rgba(15, 118, 110, 0.45), transparent 55%),
+      radial-gradient(28rem 28rem at 88% 2%, rgba(194, 104, 58, 0.28), transparent 60%),
+      linear-gradient(155deg, #211E52 0%, #14132F 70%, #0E0C24 100%);
+  }
+
+  /* Editorial hero band — works in both themes (subtle in light, richer in dark) */
+  .hero-band {
+    background-image:
+      radial-gradient(46rem 26rem at 88% -40%, rgb(var(--primary-700, 49 46 129) / 0.10), transparent 62%),
+      radial-gradient(40rem 24rem at -8% 140%, rgba(15, 118, 110, 0.10), transparent 60%);
+  }
+
+  /* Fine grain overlay for atmosphere (place as an absolutely-positioned child) */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Oversized editorial display heading */
+  .display-xl {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
 }
