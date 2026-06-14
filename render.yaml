@@ -1,0 +1,62 @@
+# Render deployment for the Nexus backend (server/).
+# The frontend deploys separately to Vercel with Root Directory = client.
+# Provision MongoDB via MongoDB Atlas and set MONGO_URI in the Render dashboard.
+services:
+  - type: web
+    name: nexus-api
+    runtime: node
+    rootDir: server
+    plan: free
+    region: oregon
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: CLIENT_ORIGIN
+        sync: false # your Vercel URL(s), comma-separated
+      - key: MONGO_URI
+        sync: false # MongoDB Atlas connection string
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: ACCESS_TOKEN_TTL
+        value: 15m
+      - key: REFRESH_TOKEN_TTL
+        value: 7d
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: COOKIE_SAMESITE
+        value: none
+      - key: CLIENT_RESET_URL
+        sync: false # https://<your-vercel-app>/reset-password
+      # File storage: local disk is ephemeral on Render — wire the Cloudinary
+      # adapter (STORAGE_DRIVER=cloudinary) before relying on uploads in prod.
+      - key: STORAGE_DRIVER
+        value: local
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      # Stripe (test or live)
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      # Email (SMTP / Mailtrap)
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        value: Nexus <no-reply@nexus.app>

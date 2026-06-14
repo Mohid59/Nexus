@@ -80,6 +80,21 @@ Interactive docs: http://localhost:5000/api/docs
 **server:** `npm run dev` · `build` · `start` · `lint` · `typecheck` · `seed`
 **client:** `npm run dev` · `build` · `lint` · `preview`
 
+## Deployment
+
+**Backend → Render** (`render.yaml` included):
+1. Create a MongoDB Atlas cluster and copy its connection string.
+2. On Render: **New → Blueprint**, point at this repo (uses `render.yaml`, root dir `server/`).
+3. Set the dashboard env vars marked `sync: false`: `MONGO_URI`, `CLIENT_ORIGIN` (your Vercel URL), `CLIENT_RESET_URL`, plus any Stripe / SMTP / Cloudinary keys. `JWT_*` secrets are auto-generated.
+4. Deploy. Health check: `/api/health` · API docs: `/api/docs`.
+
+**Frontend → Vercel** (`client/vercel.json` handles SPA routing):
+1. Import the repo on Vercel and set **Root Directory = `client`**.
+2. Env vars: `VITE_API_URL = https://<your-render-app>.onrender.com/api` (and optional `VITE_STRIPE_PUBLISHABLE_KEY`).
+3. Deploy. Build command `npm run build`, output `dist`.
+
+After both are live: set the backend `CLIENT_ORIGIN` to the Vercel URL (for CORS + refresh cookies), and register the Stripe webhook `https://<render-app>/api/payments/webhook` in the Stripe dashboard.
+
 ## Roadmap
 
 - **Phase 1 (done):** backend foundation, JWT auth, profiles, protected/role-based routing.
