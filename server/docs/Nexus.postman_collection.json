@@ -1,0 +1,75 @@
+{
+  "info": {
+    "name": "Nexus API",
+    "description": "Investor & Entrepreneur collaboration platform. Set {{baseUrl}}; the Login request auto-saves {{accessToken}}.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }] },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "accessToken", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "meetingId", "value": "" },
+    { "key": "documentId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        { "name": "Register", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jane Founder\",\n  \"email\": \"jane@startup.io\",\n  \"password\": \"Password123!\",\n  \"role\": \"entrepreneur\"\n}" } } },
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const b = pm.response.json();", "if (b.accessToken) pm.collectionVariables.set('accessToken', b.accessToken);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"michael@vcinnovate.com\",\n  \"password\": \"Password123!\"\n}" } }
+        },
+        { "name": "Verify 2FA", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/verify-2fa", "body": { "mode": "raw", "raw": "{\n  \"pendingToken\": \"\",\n  \"code\": \"123456\"\n}" } } },
+        { "name": "Refresh", "request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh" } },
+        { "name": "Logout", "request": { "method": "POST", "url": "{{baseUrl}}/auth/logout" } },
+        { "name": "Forgot password", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/forgot-password", "body": { "mode": "raw", "raw": "{\n  \"email\": \"michael@vcinnovate.com\"\n}" } } },
+        { "name": "Reset password", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/auth/reset-password", "body": { "mode": "raw", "raw": "{\n  \"token\": \"\",\n  \"password\": \"NewPassword123!\"\n}" } } }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        { "name": "Me", "request": { "method": "GET", "url": "{{baseUrl}}/users/me" } },
+        { "name": "Update me", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/users/me", "body": { "mode": "raw", "raw": "{\n  \"bio\": \"Updated bio\",\n  \"twoFactorEnabled\": false\n}" } } },
+        { "name": "Get user by id", "request": { "method": "GET", "url": "{{baseUrl}}/users/{{userId}}" } },
+        { "name": "List investors", "request": { "method": "GET", "url": "{{baseUrl}}/investors?page=1&limit=12" } },
+        { "name": "List entrepreneurs", "request": { "method": "GET", "url": "{{baseUrl}}/entrepreneurs?page=1&limit=12" } }
+      ]
+    },
+    {
+      "name": "Meetings",
+      "item": [
+        { "name": "List", "request": { "method": "GET", "url": "{{baseUrl}}/meetings?scope=upcoming" } },
+        { "name": "Create", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/meetings", "body": { "mode": "raw", "raw": "{\n  \"attendee\": \"{{userId}}\",\n  \"title\": \"Intro call\",\n  \"start\": \"2026-07-01T10:00:00.000Z\",\n  \"end\": \"2026-07-01T11:00:00.000Z\"\n}" } } },
+        { "name": "Accept", "request": { "method": "PATCH", "url": "{{baseUrl}}/meetings/{{meetingId}}/accept" } },
+        { "name": "Reject", "request": { "method": "PATCH", "url": "{{baseUrl}}/meetings/{{meetingId}}/reject" } },
+        { "name": "Cancel", "request": { "method": "PATCH", "url": "{{baseUrl}}/meetings/{{meetingId}}/cancel" } }
+      ]
+    },
+    {
+      "name": "Documents",
+      "item": [
+        { "name": "List", "request": { "method": "GET", "url": "{{baseUrl}}/documents" } },
+        { "name": "Upload", "request": { "method": "POST", "url": "{{baseUrl}}/documents", "body": { "mode": "formdata", "formdata": [{ "key": "file", "type": "file", "src": [] }] } } },
+        { "name": "Get", "request": { "method": "GET", "url": "{{baseUrl}}/documents/{{documentId}}" } },
+        { "name": "Download file", "request": { "method": "GET", "url": "{{baseUrl}}/documents/{{documentId}}/file" } },
+        { "name": "Sign", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/documents/{{documentId}}/sign", "body": { "mode": "raw", "raw": "{\n  \"signature\": \"data:image/png;base64,iVBORw0KGgo=\"\n}" } } },
+        { "name": "Share", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/documents/{{documentId}}/share", "body": { "mode": "raw", "raw": "{\n  \"userIds\": [\"{{userId}}\"]\n}" } } },
+        { "name": "Delete", "request": { "method": "DELETE", "url": "{{baseUrl}}/documents/{{documentId}}" } }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        { "name": "Wallet", "request": { "method": "GET", "url": "{{baseUrl}}/payments/wallet" } },
+        { "name": "Transactions", "request": { "method": "GET", "url": "{{baseUrl}}/payments/transactions?page=1" } },
+        { "name": "Deposit", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/payments/deposit", "body": { "mode": "raw", "raw": "{\n  \"amount\": 100\n}" } } },
+        { "name": "Withdraw", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/payments/withdraw", "body": { "mode": "raw", "raw": "{\n  \"amount\": 20\n}" } } },
+        { "name": "Transfer", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/payments/transfer", "body": { "mode": "raw", "raw": "{\n  \"to\": \"{{userId}}\",\n  \"amount\": 30,\n  \"note\": \"Seed funding\"\n}" } } }
+      ]
+    }
+  ]
+}
