@@ -45,6 +45,9 @@ import { MeetingsPage } from './pages/meetings/MeetingsPage';
 // Video call
 import { CallPage } from './pages/call/CallPage';
 
+// Wallet
+import { WalletPage } from './pages/wallet/WalletPage';
+
 // Logged-in → role dashboard; otherwise → login.
 const RootRedirect: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -114,6 +117,9 @@ function App() {
             </Route>
             <Route path="/meetings" element={<DashboardLayout />}>
               <Route index element={<MeetingsPage />} />
+            </Route>
+            <Route path="/wallet" element={<DashboardLayout />}>
+              <Route index element={<WalletPage />} />
             </Route>
             <Route path="/notifications" element={<DashboardLayout />}>
               <Route index element={<NotificationsPage />} />

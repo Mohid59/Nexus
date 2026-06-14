@@ -14,6 +14,7 @@ const LABELS: Record<string, string> = {
   entrepreneurs: 'Startups',
   messages: 'Messages',
   meetings: 'Meetings',
+  wallet: 'Wallet',
   notifications: 'Notifications',
   documents: 'Documents',
   settings: 'Settings',

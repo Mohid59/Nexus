@@ -10,6 +10,7 @@ export interface IUser extends Document {
   avatarUrl: string;
   bio: string;
   isOnline: boolean;
+  balance: number; // wallet balance in cents
 
   // Entrepreneur-specific (optional — filled in via profile after registration)
   startupName?: string;
@@ -48,6 +49,7 @@ const userSchema = new Schema<IUser>(
     avatarUrl: { type: String, default: '' },
     bio: { type: String, default: '' },
     isOnline: { type: Boolean, default: false },
+    balance: { type: Number, default: 0, min: 0 },
 
     startupName: String,
     pitchSummary: String,
@@ -81,6 +83,7 @@ const userSchema = new Schema<IUser>(
         delete r.passwordResetToken;
         delete r.passwordResetExpires;
         delete r.tokenVersion;
+        delete r.balance;
         return r;
       },
     },
