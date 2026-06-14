@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Send, Phone, Video, Info, Smile } from 'lucide-react';
 import { Avatar } from '../../components/ui/Avatar';
 import { Button } from '../../components/ui/Button';
@@ -14,7 +14,14 @@ import { MessageCircle } from 'lucide-react';
 
 export const ChatPage: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
+  const navigate = useNavigate();
   const { user: currentUser } = useAuth();
+
+  const startCall = () => {
+    if (currentUser && userId) {
+      navigate(`/call/chat-${[currentUser.id, userId].sort().join('-')}`);
+    }
+  };
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [conversations, setConversations] = useState<ChatConversation[]>([]);
@@ -106,6 +113,7 @@ export const ChatPage: React.FC = () => {
                   size="sm"
                   className="rounded-full p-2"
                   aria-label="Video call"
+                  onClick={startCall}
                 >
                   <Video size={18} />
                 </Button>

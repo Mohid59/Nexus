@@ -42,6 +42,9 @@ import { ChatPage } from './pages/chat/ChatPage';
 // Meetings
 import { MeetingsPage } from './pages/meetings/MeetingsPage';
 
+// Video call
+import { CallPage } from './pages/call/CallPage';
+
 // Logged-in → role dashboard; otherwise → login.
 const RootRedirect: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -80,6 +83,9 @@ function App() {
 
           {/* Authenticated routes */}
           <Route element={<ProtectedRoute />}>
+            {/* Full-screen video call (no dashboard shell) */}
+            <Route path="/call/:roomId" element={<CallPage />} />
+
             {/* Role-specific dashboards */}
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route element={<RoleRoute role="entrepreneur" />}>
