@@ -6,6 +6,7 @@ export const updateProfileSchema = z
     bio: z.string().max(2000).optional(),
     avatarUrl: z.string().url().or(z.literal('')).optional(),
     isOnline: z.boolean().optional(),
+    twoFactorEnabled: z.boolean().optional(),
 
     // Entrepreneur
     startupName: z.string().max(120).optional(),

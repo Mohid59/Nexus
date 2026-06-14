@@ -56,3 +56,26 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string): Prom
     else throw err;
   }
 }
+
+/** Sends a 6-digit 2FA login code. Logs the code in dev if email transport fails. */
+export async function sendOtpEmail(to: string, code: string): Promise<void> {
+  try {
+    const tx = await getTransport();
+    const info = await tx.sendMail({
+      from: env.MAIL_FROM,
+      to,
+      subject: 'Your Nexus verification code',
+      html: `
+        <p>Your Nexus login verification code is:</p>
+        <p style="font-size:26px;font-weight:700;letter-spacing:6px">${code}</p>
+        <p>This code expires in 5 minutes. If you didn't try to sign in, ignore this email.</p>
+      `,
+    });
+    const preview = nodemailer.getTestMessageUrl(info);
+    if (preview) logger.info(`OTP email preview URL: ${preview}`);
+  } catch (err) {
+    logger.error(`Failed to send OTP email: ${err instanceof Error ? err.message : String(err)}`);
+    if (!isProd) logger.info(`DEV fallback — OTP for ${to}: ${code}`);
+    else throw err;
+  }
+}

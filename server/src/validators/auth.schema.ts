@@ -21,5 +21,10 @@ export const resetPasswordSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters').max(128),
 });
 
+export const verify2faSchema = z.object({
+  pendingToken: z.string().min(10),
+  code: z.string().regex(/^\d{6}$/, 'Code must be 6 digits'),
+});
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;

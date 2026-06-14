@@ -7,6 +7,7 @@ import {
   logout,
   forgotPassword,
   resetPassword,
+  verifyTwoFactor,
 } from '../controllers/auth.controller';
 import { validate } from '../middleware/validate';
 import {
@@ -14,6 +15,7 @@ import {
   loginSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
+  verify2faSchema,
 } from '../validators/auth.schema';
 
 const authLimiter = rateLimit({
@@ -28,6 +30,7 @@ const router = Router();
 
 router.post('/register', authLimiter, validate({ body: registerSchema }), register);
 router.post('/login', authLimiter, validate({ body: loginSchema }), login);
+router.post('/verify-2fa', authLimiter, validate({ body: verify2faSchema }), verifyTwoFactor);
 router.post('/refresh', refresh);
 router.post('/logout', logout);
 router.post('/forgot-password', authLimiter, validate({ body: forgotPasswordSchema }), forgotPassword);

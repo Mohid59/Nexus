@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, CircleDollarSign, Building2, LogIn, AlertCircle } from 'lucide-react';
+import { User, CircleDollarSign, Building2, LogIn, AlertCircle, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { AuthLayout } from '../../components/layout/AuthLayout';
 import { Button } from '../../components/ui/Button';
@@ -14,16 +14,40 @@ export const LoginPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { login } = useAuth();
+  const [pendingToken, setPendingToken] = useState<string | null>(null);
+  const [code, setCode] = useState('');
+
+  const { login, verify2fa } = useAuth();
   const navigate = useNavigate();
+
+  const goToDashboard = () => navigate(role === 'entrepreneur' ? '/dashboard/entrepreneur' : '/dashboard/investor');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
     try {
-      await login(email, password, role);
-      navigate(role === 'entrepreneur' ? '/dashboard/entrepreneur' : '/dashboard/investor');
+      const res = await login(email, password, role);
+      if (res.twoFactorRequired) {
+        setPendingToken(res.pendingToken ?? null);
+        setIsLoading(false);
+        return;
+      }
+      goToDashboard();
+    } catch (err) {
+      setError((err as Error).message);
+      setIsLoading(false);
+    }
+  };
+
+  const handleVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!pendingToken) return;
+    setError(null);
+    setIsLoading(true);
+    try {
+      await verify2fa(pendingToken, code);
+      goToDashboard();
     } catch (err) {
       setError((err as Error).message);
       setIsLoading(false);
@@ -56,17 +80,58 @@ export const LoginPage: React.FC = () => {
     </button>
   );
 
+  const errorBox = error && (
+    <div className="mt-6 flex items-start gap-2 rounded-lg border border-error-500/40 bg-error-50 px-4 py-3 text-error-700 dark:bg-error-500/10">
+      <AlertCircle size={18} className="mt-0.5 shrink-0" />
+      <span className="text-sm">{error}</span>
+    </div>
+  );
+
+  if (pendingToken) {
+    return (
+      <AuthLayout>
+        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-100 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300">
+          <ShieldCheck size={24} />
+        </div>
+        <h2 className="display-xl text-4xl font-semibold text-ink">Verify it's you</h2>
+        <p className="mt-2 text-muted">Enter the 6-digit code we sent to your email.</p>
+        {errorBox}
+        <form className="mt-7 space-y-5" onSubmit={handleVerify}>
+          <Input
+            label="Verification code"
+            inputMode="numeric"
+            maxLength={6}
+            value={code}
+            onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
+            required
+            fullWidth
+            placeholder="123456"
+            className="tracking-[0.3em]"
+          />
+          <Button type="submit" fullWidth size="lg" isLoading={isLoading}>
+            Verify & sign in
+          </Button>
+        </form>
+        <button
+          onClick={() => {
+            setPendingToken(null);
+            setCode('');
+            setError(null);
+          }}
+          className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300"
+        >
+          <ArrowLeft size={16} /> Back to login
+        </button>
+      </AuthLayout>
+    );
+  }
+
   return (
     <AuthLayout>
       <h2 className="display-xl text-4xl font-semibold text-ink">Welcome back</h2>
       <p className="mt-2 text-muted">Sign in to your Business Nexus account.</p>
 
-      {error && (
-        <div className="mt-6 flex items-start gap-2 rounded-lg border border-error-500/40 bg-error-50 px-4 py-3 text-error-700 dark:bg-error-500/10">
-          <AlertCircle size={18} className="mt-0.5 shrink-0" />
-          <span className="text-sm">{error}</span>
-        </div>
-      )}
+      {errorBox}
 
       <form className="mt-7 space-y-5" onSubmit={handleSubmit}>
         <div>

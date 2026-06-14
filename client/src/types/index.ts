@@ -8,6 +8,7 @@ export interface User {
   avatarUrl: string;
   bio: string;
   isOnline?: boolean;
+  twoFactorEnabled?: boolean;
   createdAt: string;
 }
 
@@ -70,7 +71,8 @@ export interface Document {
 
 export interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string, role: UserRole) => Promise<void>;
+  login: (email: string, password: string, role: UserRole) => Promise<{ twoFactorRequired: boolean; pendingToken?: string }>;
+  verify2fa: (pendingToken: string, code: string) => Promise<void>;
   register: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
   logout: () => void;
   forgotPassword: (email: string) => Promise<void>;

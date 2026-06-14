@@ -3,9 +3,15 @@ import { Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 import { AppError } from '../utils/AppError';
 import { User, IUser } from '../models/User';
-import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/tokens';
+import {
+  signAccessToken,
+  signRefreshToken,
+  verifyRefreshToken,
+  signPendingToken,
+  verifyPendingToken,
+} from '../utils/tokens';
 import { setRefreshCookie, clearRefreshCookie, REFRESH_COOKIE } from '../utils/cookies';
-import { sendPasswordResetEmail } from '../utils/mailer';
+import { sendPasswordResetEmail, sendOtpEmail } from '../utils/mailer';
 import { env, isProd } from '../config/env';
 import { RegisterInput, LoginInput } from '../validators/auth.schema';
 
@@ -36,6 +42,49 @@ export const login = asyncHandler(async (req, res) => {
   if (!user || !(await user.comparePassword(password))) {
     throw new AppError(401, 'Invalid email or password');
   }
+
+  if (user.twoFactorEnabled) {
+    const code = String(Math.floor(100000 + Math.random() * 900000));
+    user.twoFactorCode = crypto.createHash('sha256').update(code).digest('hex');
+    user.twoFactorExpires = new Date(Date.now() + 5 * 60 * 1000);
+    await user.save({ validateBeforeSave: false });
+    await sendOtpEmail(user.email, code);
+    res.status(200).json({
+      twoFactorRequired: true,
+      pendingToken: signPendingToken(user.id),
+      ...(isProd ? {} : { devCode: code }),
+    });
+    return;
+  }
+
+  issueSession(res, user, 200);
+});
+
+export const verifyTwoFactor = asyncHandler(async (req, res) => {
+  const { pendingToken, code } = req.body as { pendingToken: string; code: string };
+
+  let payload: { sub: string };
+  try {
+    payload = verifyPendingToken(pendingToken);
+  } catch {
+    throw new AppError(401, 'Verification session expired. Please log in again.');
+  }
+
+  const user = await User.findById(payload.sub).select('+twoFactorCode +twoFactorExpires');
+  if (!user || !user.twoFactorCode || !user.twoFactorExpires) {
+    throw new AppError(400, 'No pending verification for this account');
+  }
+  if (user.twoFactorExpires.getTime() < Date.now()) {
+    throw new AppError(400, 'Code expired. Please log in again.');
+  }
+  const hashed = crypto.createHash('sha256').update(code).digest('hex');
+  if (hashed !== user.twoFactorCode) {
+    throw new AppError(401, 'Invalid verification code');
+  }
+
+  user.twoFactorCode = undefined;
+  user.twoFactorExpires = undefined;
+  await user.save({ validateBeforeSave: false });
 
   issueSession(res, user, 200);
 });

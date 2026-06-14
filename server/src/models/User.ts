@@ -33,6 +33,9 @@ export interface IUser extends Document {
   tokenVersion: number;
   passwordResetToken?: string;
   passwordResetExpires?: Date;
+  twoFactorEnabled: boolean;
+  twoFactorCode?: string;
+  twoFactorExpires?: Date;
 
   createdAt: Date;
   updatedAt: Date;
@@ -69,6 +72,9 @@ const userSchema = new Schema<IUser>(
     tokenVersion: { type: Number, default: 0 },
     passwordResetToken: { type: String, select: false },
     passwordResetExpires: { type: Date, select: false },
+    twoFactorEnabled: { type: Boolean, default: false },
+    twoFactorCode: { type: String, select: false },
+    twoFactorExpires: { type: Date, select: false },
   },
   {
     timestamps: true,
@@ -84,6 +90,8 @@ const userSchema = new Schema<IUser>(
         delete r.passwordResetExpires;
         delete r.tokenVersion;
         delete r.balance;
+        delete r.twoFactorCode;
+        delete r.twoFactorExpires;
         return r;
       },
     },

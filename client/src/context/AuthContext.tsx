@@ -47,10 +47,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, [persistUser, clearSession]);
 
-  const login = async (email: string, password: string, role: UserRole): Promise<void> => {
+  const login = async (
+    email: string,
+    password: string,
+    role: UserRole
+  ): Promise<{ twoFactorRequired: boolean; pendingToken?: string }> => {
     setIsLoading(true);
     try {
       const { data } = await api.post('/auth/login', { email, password });
+      if (data.twoFactorRequired) {
+        return { twoFactorRequired: true, pendingToken: data.pendingToken as string };
+      }
       const loggedIn = data.user as User;
       if (loggedIn.role !== role) {
         throw new Error(`This account is registered as a ${loggedIn.role}, not a ${role}.`);
@@ -58,8 +65,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setAccessToken(data.accessToken as string);
       persistUser(loggedIn);
       toast.success('Successfully logged in!');
+      return { twoFactorRequired: false };
     } catch (error) {
       toast.error(apiErrorMessage(error, 'Login failed'));
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const verify2fa = async (pendingToken: string, code: string): Promise<void> => {
+    setIsLoading(true);
+    try {
+      const { data } = await api.post('/auth/verify-2fa', { pendingToken, code });
+      setAccessToken(data.accessToken as string);
+      persistUser(data.user as User);
+      toast.success('Successfully logged in!');
+    } catch (error) {
+      toast.error(apiErrorMessage(error, 'Verification failed'));
       throw error;
     } finally {
       setIsLoading(false);
@@ -128,6 +151,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const value: AuthContextType = {
     user,
     login,
+    verify2fa,
     register,
     logout,
     forgotPassword,

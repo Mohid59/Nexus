@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { User, Lock, Bell, Globe, Palette, CreditCard } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -8,9 +8,21 @@ import { Avatar } from '../../components/ui/Avatar';
 import { useAuth } from '../../context/AuthContext';
 
 export const SettingsPage: React.FC = () => {
-  const { user } = useAuth();
-  
+  const { user, updateProfile } = useAuth();
+  const [twoFaBusy, setTwoFaBusy] = useState(false);
+
   if (!user) return null;
+
+  const toggle2fa = async () => {
+    setTwoFaBusy(true);
+    try {
+      await updateProfile(user.id, { twoFactorEnabled: !user.twoFactorEnabled });
+    } catch {
+      /* toast handled in updateProfile */
+    } finally {
+      setTwoFaBusy(false);
+    }
+  };
   
   return (
     <div className="space-y-6 animate-fade-in">
@@ -135,11 +147,15 @@ export const SettingsPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-muted">
-                      Add an extra layer of security to your account
+                      Email a 6-digit code at login for an extra layer of security
                     </p>
-                    <Badge variant="error" className="mt-1">Not Enabled</Badge>
+                    <Badge variant={user.twoFactorEnabled ? 'success' : 'gray'} className="mt-1">
+                      {user.twoFactorEnabled ? 'Enabled' : 'Not Enabled'}
+                    </Badge>
                   </div>
-                  <Button variant="outline">Enable</Button>
+                  <Button variant="outline" isLoading={twoFaBusy} onClick={toggle2fa}>
+                    {user.twoFactorEnabled ? 'Disable' : 'Enable'}
+                  </Button>
                 </div>
               </div>
               
