@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import {
   X, LayoutDashboard, Building2, CircleDollarSign, Users,
-  MessagesSquare, Bell, FileText, Settings, HelpCircle, Handshake,
+  MessagesSquare, Bell, FileText, Settings, HelpCircle, Handshake, CalendarClock,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Badge } from '../ui/Badge';
@@ -57,6 +57,7 @@ export const Sidebar: React.FC<{ open: boolean; onClose: () => void }> = ({ open
     { to: `/profile/entrepreneur/${user.id}`, icon: <Building2 size={18} />, label: 'My Startup' },
     { to: '/investors', icon: <CircleDollarSign size={18} />, label: 'Find Investors' },
     { to: '/messages', icon: <MessagesSquare size={18} />, label: 'Messages' },
+    { to: '/meetings', icon: <CalendarClock size={18} />, label: 'Meetings' },
     { to: '/notifications', icon: <Bell size={18} />, label: 'Notifications' },
     { to: '/documents', icon: <FileText size={18} />, label: 'Documents' },
   ];
@@ -66,6 +67,7 @@ export const Sidebar: React.FC<{ open: boolean; onClose: () => void }> = ({ open
     { to: `/profile/investor/${user.id}`, icon: <CircleDollarSign size={18} />, label: 'My Portfolio' },
     { to: '/entrepreneurs', icon: <Users size={18} />, label: 'Find Startups' },
     { to: '/messages', icon: <MessagesSquare size={18} />, label: 'Messages' },
+    { to: '/meetings', icon: <CalendarClock size={18} />, label: 'Meetings' },
     { to: '/notifications', icon: <Bell size={18} />, label: 'Notifications' },
     { to: '/deals', icon: <Handshake size={18} />, label: 'Deals' },
   ];

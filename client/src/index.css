@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap');
+@import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 @tailwind base;
 @tailwind components;
@@ -102,4 +103,85 @@
     letter-spacing: -0.02em;
     line-height: 1.02;
   }
+}
+
+/* react-big-calendar — themed to design tokens (light + dark) */
+.rbc-calendar {
+  color: rgb(var(--ink));
+  font-size: 0.875rem;
+}
+.rbc-toolbar {
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.rbc-toolbar .rbc-toolbar-label {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: rgb(var(--ink));
+}
+.rbc-toolbar button {
+  color: rgb(var(--ink));
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--line));
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.75rem;
+}
+.rbc-toolbar button:hover,
+.rbc-toolbar button:focus {
+  background: rgba(49, 46, 129, 0.06);
+  color: rgb(var(--ink));
+  border-color: rgb(var(--line));
+}
+.rbc-toolbar button.rbc-active,
+.rbc-toolbar button.rbc-active:hover,
+.rbc-toolbar button.rbc-active:focus {
+  background: #312e81;
+  color: #fff;
+  border-color: #312e81;
+}
+.rbc-month-view,
+.rbc-time-view,
+.rbc-agenda-view table.rbc-agenda-table {
+  border-color: rgb(var(--line));
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.rbc-header,
+.rbc-month-row + .rbc-month-row,
+.rbc-day-bg + .rbc-day-bg,
+.rbc-header + .rbc-header,
+.rbc-time-header-content,
+.rbc-time-content,
+.rbc-timeslot-group,
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td,
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  border-color: rgb(var(--line));
+}
+.rbc-header {
+  color: rgb(var(--muted));
+  font-weight: 600;
+  padding: 0.5rem;
+}
+.rbc-off-range-bg {
+  background: rgb(var(--muted) / 0.06);
+}
+.rbc-today {
+  background: rgba(49, 46, 129, 0.06);
+}
+.rbc-event,
+.rbc-day-slot .rbc-event {
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  box-shadow: none;
+}
+.rbc-show-more {
+  color: #312e81;
+  background: transparent;
+}
+.rbc-current-time-indicator {
+  background: #c2683a;
 }

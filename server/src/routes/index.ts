@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import authRoutes from './auth.routes';
 import userRoutes from './user.routes';
+import meetingRoutes from './meeting.routes';
 import { requireAuth } from '../middleware/requireAuth';
 import { validate } from '../middleware/validate';
 import { listQuerySchema } from '../validators/user.schema';
@@ -14,6 +15,7 @@ api.get('/health', (_req, res) => {
 
 api.use('/auth', authRoutes);
 api.use('/users', userRoutes);
+api.use('/meetings', meetingRoutes);
 
 api.get('/investors', requireAuth, validate({ query: listQuerySchema }), listInvestors);
 api.get('/entrepreneurs', requireAuth, validate({ query: listQuerySchema }), listEntrepreneurs);

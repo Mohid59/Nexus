@@ -39,6 +39,9 @@ import { DealsPage } from './pages/deals/DealsPage';
 // Chat Pages
 import { ChatPage } from './pages/chat/ChatPage';
 
+// Meetings
+import { MeetingsPage } from './pages/meetings/MeetingsPage';
+
 // Logged-in → role dashboard; otherwise → login.
 const RootRedirect: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -102,6 +105,9 @@ function App() {
             </Route>
             <Route path="/messages" element={<DashboardLayout />}>
               <Route index element={<MessagesPage />} />
+            </Route>
+            <Route path="/meetings" element={<DashboardLayout />}>
+              <Route index element={<MeetingsPage />} />
             </Route>
             <Route path="/notifications" element={<DashboardLayout />}>
               <Route index element={<NotificationsPage />} />
