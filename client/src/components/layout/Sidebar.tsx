@@ -70,6 +70,7 @@ export const Sidebar: React.FC<{ open: boolean; onClose: () => void }> = ({ open
     { to: '/meetings', icon: <CalendarClock size={18} />, label: 'Meetings' },
     { to: '/notifications', icon: <Bell size={18} />, label: 'Notifications' },
     { to: '/deals', icon: <Handshake size={18} />, label: 'Deals' },
+    { to: '/documents', icon: <FileText size={18} />, label: 'Documents' },
   ];
 
   const items = user.role === 'entrepreneur' ? entrepreneurItems : investorItems;
