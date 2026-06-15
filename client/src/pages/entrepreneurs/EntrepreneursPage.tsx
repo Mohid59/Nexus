@@ -1,34 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Filter, MapPin } from 'lucide-react';
 import { Input } from '../../components/ui/Input';
 import { Card, CardHeader, CardBody } from '../../components/ui/Card';
 import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
-import { entrepreneurs } from '../../data/users';
+import { listEntrepreneurs } from '../../lib/users';
+import { Entrepreneur } from '../../types';
 
 export const EntrepreneursPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
   const [selectedFundingRange, setSelectedFundingRange] = useState<string[]>([]);
-  
+  const [entrepreneurs, setEntrepreneurs] = useState<Entrepreneur[]>([]);
+
+  useEffect(() => {
+    listEntrepreneurs()
+      .then(setEntrepreneurs)
+      .catch(() => undefined);
+  }, []);
+
   // Get unique industries and funding ranges
-  const allIndustries = Array.from(new Set(entrepreneurs.map(e => e.industry)));
+  const allIndustries = Array.from(new Set(entrepreneurs.map((e) => e.industry).filter(Boolean)));
   const fundingRanges = ['< $500K', '$500K - $1M', '$1M - $5M', '> $5M'];
   
   // Filter entrepreneurs based on search and filters
   const filteredEntrepreneurs = entrepreneurs.filter(entrepreneur => {
     const matchesSearch = searchQuery === '' || 
       entrepreneur.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.startupName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.pitchSummary.toLowerCase().includes(searchQuery.toLowerCase());
-    
+      (entrepreneur.startupName ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (entrepreneur.industry ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (entrepreneur.pitchSummary ?? '').toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesIndustry = selectedIndustries.length === 0 ||
-      selectedIndustries.includes(entrepreneur.industry);
+      selectedIndustries.includes(entrepreneur.industry ?? '');
     
     // Simple funding range filter based on the amount string
     const matchesFunding = selectedFundingRange.length === 0 || 
       selectedFundingRange.some(range => {
-        const amount = parseInt(entrepreneur.fundingNeeded.replace(/[^0-9]/g, ''));
+        const amount = parseInt((entrepreneur.fundingNeeded ?? '').replace(/[^0-9]/g, ''));
         switch (range) {
           case '< $500K': return amount < 500;
           case '$500K - $1M': return amount >= 500 && amount <= 1000;

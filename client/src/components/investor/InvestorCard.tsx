@@ -45,10 +45,10 @@ export const InvestorCard: React.FC<InvestorCardProps> = ({
           
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-ink mb-1">{investor.name}</h3>
-            <p className="text-sm text-muted mb-2">Investor • {investor.totalInvestments} investments</p>
-            
+            <p className="text-sm text-muted mb-2">Investor • {investor.totalInvestments ?? 0} investments</p>
+
             <div className="flex flex-wrap gap-2 mb-3">
-              {investor.investmentStage.map((stage, index) => (
+              {(investor.investmentStage ?? []).map((stage, index) => (
                 <Badge key={index} variant="secondary" size="sm">{stage}</Badge>
               ))}
             </div>
@@ -58,7 +58,7 @@ export const InvestorCard: React.FC<InvestorCardProps> = ({
         <div className="mt-3">
           <h4 className="text-sm font-medium text-ink mb-1">Investment Interests</h4>
           <div className="flex flex-wrap gap-2">
-            {investor.investmentInterests.map((interest, index) => (
+            {(investor.investmentInterests ?? []).map((interest, index) => (
               <Badge key={index} variant="primary" size="sm">{interest}</Badge>
             ))}
           </div>
@@ -71,7 +71,7 @@ export const InvestorCard: React.FC<InvestorCardProps> = ({
         <div className="mt-3 flex justify-between items-center">
           <div>
             <span className="text-xs text-muted">Investment Range</span>
-            <p className="text-sm font-medium text-ink">{investor.minimumInvestment} - {investor.maximumInvestment}</p>
+            <p className="text-sm font-medium text-ink">{investor.minimumInvestment ?? 'N/A'} - {investor.maximumInvestment ?? 'N/A'}</p>
           </div>
         </div>
       </CardBody>

@@ -1,34 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Filter, MapPin } from 'lucide-react';
 import { Input } from '../../components/ui/Input';
 import { Card, CardHeader, CardBody } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { InvestorCard } from '../../components/investor/InvestorCard';
-import { investors } from '../../data/users';
+import { listInvestors } from '../../lib/users';
+import { Investor } from '../../types';
 
 export const InvestorsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStages, setSelectedStages] = useState<string[]>([]);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  
+  const [investors, setInvestors] = useState<Investor[]>([]);
+
+  useEffect(() => {
+    listInvestors()
+      .then(setInvestors)
+      .catch(() => undefined);
+  }, []);
+
   // Get unique investment stages and interests
-  const allStages = Array.from(new Set(investors.flatMap(i => i.investmentStage)));
-  const allInterests = Array.from(new Set(investors.flatMap(i => i.investmentInterests)));
+  const allStages = Array.from(new Set(investors.flatMap((i) => i.investmentStage ?? [])));
+  const allInterests = Array.from(new Set(investors.flatMap((i) => i.investmentInterests ?? [])));
   
   // Filter investors based on search and filters
   const filteredInvestors = investors.filter(investor => {
     const matchesSearch = searchQuery === '' || 
       investor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      investor.bio.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      investor.investmentInterests.some(interest => 
+      (investor.bio ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (investor.investmentInterests ?? []).some(interest =>
         interest.toLowerCase().includes(searchQuery.toLowerCase())
       );
-    
+
     const matchesStages = selectedStages.length === 0 ||
-      investor.investmentStage.some(stage => selectedStages.includes(stage));
-    
+      (investor.investmentStage ?? []).some(stage => selectedStages.includes(stage));
+
     const matchesInterests = selectedInterests.length === 0 ||
-      investor.investmentInterests.some(interest => selectedInterests.includes(interest));
+      (investor.investmentInterests ?? []).some(interest => selectedInterests.includes(interest));
     
     return matchesSearch && matchesStages && matchesInterests;
   });

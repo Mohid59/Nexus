@@ -45,12 +45,12 @@ export const EntrepreneurCard: React.FC<EntrepreneurCardProps> = ({
           
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-ink mb-1">{entrepreneur.name}</h3>
-            <p className="text-sm text-muted mb-2">{entrepreneur.startupName}</p>
+            <p className="text-sm text-muted mb-2">{entrepreneur.startupName ?? 'Unnamed startup'}</p>
             
             <div className="flex flex-wrap gap-2 mb-3">
-              <Badge variant="primary" size="sm">{entrepreneur.industry}</Badge>
-              <Badge variant="gray" size="sm">{entrepreneur.location}</Badge>
-              <Badge variant="accent" size="sm">Founded {entrepreneur.foundedYear}</Badge>
+              <Badge variant="primary" size="sm">{entrepreneur.industry ?? '—'}</Badge>
+              <Badge variant="gray" size="sm">{entrepreneur.location ?? '—'}</Badge>
+              <Badge variant="accent" size="sm">Founded {entrepreneur.foundedYear ?? '—'}</Badge>
             </div>
           </div>
         </div>
@@ -63,12 +63,12 @@ export const EntrepreneurCard: React.FC<EntrepreneurCardProps> = ({
         <div className="mt-3 flex justify-between items-center">
           <div>
             <span className="text-xs text-muted">Funding Need</span>
-            <p className="text-sm font-medium text-ink">{entrepreneur.fundingNeeded}</p>
+            <p className="text-sm font-medium text-ink">{entrepreneur.fundingNeeded ?? 'N/A'}</p>
           </div>
           
           <div>
             <span className="text-xs text-muted">Team Size</span>
-            <p className="text-sm font-medium text-ink">{entrepreneur.teamSize} people</p>
+            <p className="text-sm font-medium text-ink">{entrepreneur.teamSize ?? 0} people</p>
           </div>
         </div>
       </CardBody>

@@ -9,20 +9,26 @@ import { EmptyState } from '../../components/ui/EmptyState';
 import { CollaborationRequestCard } from '../../components/collaboration/CollaborationRequestCard';
 import { InvestorCard } from '../../components/investor/InvestorCard';
 import { useAuth } from '../../context/AuthContext';
-import { CollaborationRequest } from '../../types';
+import { CollaborationRequest, Investor } from '../../types';
 import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
-import { investors } from '../../data/users';
+import { listInvestors } from '../../lib/users';
 
 export const EntrepreneurDashboard: React.FC = () => {
   const { user } = useAuth();
   const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
-  const [recommendedInvestors] = useState(investors.slice(0, 3));
+  const [recommendedInvestors, setRecommendedInvestors] = useState<Investor[]>([]);
 
   useEffect(() => {
     if (user) {
       setCollaborationRequests(getRequestsForEntrepreneur(user.id));
     }
   }, [user]);
+
+  useEffect(() => {
+    listInvestors()
+      .then((data) => setRecommendedInvestors(data.slice(0, 3)))
+      .catch(() => undefined);
+  }, []);
 
   const handleRequestStatusUpdate = (requestId: string, status: 'accepted' | 'rejected') => {
     setCollaborationRequests((prev) => prev.map((req) => (req.id === requestId ? { ...req, status } : req)));

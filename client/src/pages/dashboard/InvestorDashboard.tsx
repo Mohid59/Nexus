@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, PieChart, Filter, Search, PlusCircle, Handshake } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
@@ -9,13 +9,19 @@ import { StatCard } from '../../components/ui/StatCard';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard';
 import { useAuth } from '../../context/AuthContext';
-import { entrepreneurs } from '../../data/users';
+import { listEntrepreneurs } from '../../lib/users';
+import { Entrepreneur } from '../../types';
 import { getRequestsFromInvestor } from '../../data/collaborationRequests';
 
 export const InvestorDashboard: React.FC = () => {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const [entrepreneurs, setEntrepreneurs] = useState<Entrepreneur[]>([]);
+
+  useEffect(() => {
+    listEntrepreneurs().then(setEntrepreneurs).catch(() => undefined);
+  }, []);
 
   if (!user) return null;
 
@@ -26,14 +32,14 @@ export const InvestorDashboard: React.FC = () => {
     const matchesSearch =
       searchQuery === '' ||
       entrepreneur.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.startupName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entrepreneur.pitchSummary.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesIndustry = selectedIndustries.length === 0 || selectedIndustries.includes(entrepreneur.industry);
+      (entrepreneur.startupName ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (entrepreneur.industry ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (entrepreneur.pitchSummary ?? '').toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesIndustry = selectedIndustries.length === 0 || selectedIndustries.includes(entrepreneur.industry ?? '');
     return matchesSearch && matchesIndustry;
   });
 
-  const industries = Array.from(new Set(entrepreneurs.map((e) => e.industry)));
+  const industries = Array.from(new Set(entrepreneurs.map((e) => e.industry).filter(Boolean)));
 
   const toggleIndustry = (industry: string) => {
     setSelectedIndustries((prev) => (prev.includes(industry) ? prev.filter((i) => i !== industry) : [...prev, industry]));
