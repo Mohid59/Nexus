@@ -24,6 +24,7 @@ import { Badge, BadgeVariant } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { Skeleton } from '../../components/ui/Skeleton';
+import { PdfPreview } from '../../components/ui/PdfPreview';
 
 const STATUS_BADGE: Record<DocumentStatus, { variant: BadgeVariant; label: string }> = {
   uploaded: { variant: 'gray', label: 'Uploaded' },
@@ -227,7 +228,7 @@ export const DocumentsPage: React.FC = () => {
       <Modal isOpen={!!preview} onClose={closePreview} title={preview?.doc.originalName} size="xl">
         {preview &&
           (kindOf(preview.doc.mimeType) === 'pdf' ? (
-            <iframe title={preview.doc.originalName} src={preview.url} className="h-[70vh] w-full rounded-lg border border-line" />
+            <PdfPreview url={preview.url} />
           ) : kindOf(preview.doc.mimeType) === 'image' ? (
             <img src={preview.url} alt={preview.doc.originalName} className="mx-auto max-h-[70vh] rounded-lg" />
           ) : (
