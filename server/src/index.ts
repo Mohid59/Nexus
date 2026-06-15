@@ -17,6 +17,7 @@ async function bootstrap(): Promise<void> {
     cors: { origin: CLIENT_ORIGINS, credentials: true },
   });
   setupSocket(io);
+  app.set('io', io); // controllers emit real-time events (e.g. chat) via req.app.get('io')
 
   server.listen(env.PORT, () => {
     logger.info(`Nexus API listening on http://localhost:${env.PORT}`);

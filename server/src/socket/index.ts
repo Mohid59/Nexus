@@ -31,6 +31,9 @@ export function setupSocket(io: Server): void {
     const data = socket.data as SocketData;
     logger.debug(`Socket connected: ${socket.id} (user ${data.user.id})`);
 
+    // Personal room keyed by userId — lets the server push chat/notifications to all the user's tabs.
+    socket.join(data.user.id);
+
     socket.on('call:join', (roomId: string) => {
       const room = io.sockets.adapter.rooms.get(roomId);
       const existing = room ? [...room] : [];

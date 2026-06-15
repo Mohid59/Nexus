@@ -1,5 +1,10 @@
 import { api } from './api';
-import { Entrepreneur, Investor } from '../types';
+import { Entrepreneur, Investor, User } from '../types';
+
+export async function getUser(id: string): Promise<User> {
+  const { data } = await api.get(`/users/${id}`);
+  return data.user as User;
+}
 
 export async function listInvestors(): Promise<Investor[]> {
   const { data } = await api.get('/investors', { params: { limit: 100 } });
