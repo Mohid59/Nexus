@@ -11,6 +11,7 @@ export interface ISignature {
 export interface IDocumentFile extends MongooseDocument {
   originalName: string;
   storageKey: string;
+  url?: string;
   mimeType: string;
   size: number;
   uploadedBy: Types.ObjectId;
@@ -35,6 +36,7 @@ const documentSchema = new Schema<IDocumentFile>(
   {
     originalName: { type: String, required: true },
     storageKey: { type: String, required: true },
+    url: { type: String },
     mimeType: { type: String, required: true },
     size: { type: Number, required: true },
     uploadedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },

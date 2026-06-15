@@ -5,6 +5,8 @@ import { asyncHandler } from '../utils/asyncHandler';
 import { AppError } from '../utils/AppError';
 import { DocumentFile, IDocumentFile } from '../models/Document';
 import { UPLOAD_DIR } from '../middleware/upload';
+import { env } from '../config/env';
+import { uploadBufferToCloudinary, deleteFromCloudinary } from '../utils/cloudinary';
 
 const POP = 'name avatarUrl role email';
 
@@ -24,9 +26,21 @@ async function loadAccessible(id: string, userId: string): Promise<IDocumentFile
 
 export const uploadDocument = asyncHandler(async (req, res) => {
   if (!req.file) throw new AppError(400, 'No file uploaded');
+
+  let storageKey: string;
+  let url: string | undefined;
+  if (env.STORAGE_DRIVER === 'cloudinary') {
+    const uploaded = await uploadBufferToCloudinary(req.file.buffer, req.file.originalname);
+    storageKey = uploaded.publicId;
+    url = uploaded.url;
+  } else {
+    storageKey = req.file.filename;
+  }
+
   const doc = await DocumentFile.create({
     originalName: req.file.originalname,
-    storageKey: req.file.filename,
+    storageKey,
+    url,
     mimeType: req.file.mimetype,
     size: req.file.size,
     uploadedBy: req.user!.id,
@@ -56,6 +70,10 @@ export const getDocument = asyncHandler(async (req, res) => {
 
 export const downloadFile = asyncHandler(async (req, res) => {
   const doc = await loadAccessible(req.params.id as string, req.user!.id);
+  if (doc.url) {
+    res.redirect(doc.url); // Cloudinary-hosted asset
+    return;
+  }
   const filePath = path.join(UPLOAD_DIR, doc.storageKey);
   if (!fs.existsSync(filePath)) throw new AppError(404, 'File is missing from storage');
   res.setHeader('Content-Type', doc.mimeType);
@@ -100,8 +118,11 @@ export const deleteDocument = asyncHandler(async (req, res) => {
   if (!doc) throw new AppError(404, 'Document not found');
   if (doc.uploadedBy.toString() !== userId) throw new AppError(403, 'Only the owner can delete this document');
 
-  const filePath = path.join(UPLOAD_DIR, doc.storageKey);
-  fs.promises.unlink(filePath).catch(() => undefined);
+  if (doc.url) {
+    await deleteFromCloudinary(doc.storageKey);
+  } else {
+    fs.promises.unlink(path.join(UPLOAD_DIR, doc.storageKey)).catch(() => undefined);
+  }
   await doc.deleteOne();
   res.json({ message: 'Document deleted' });
 });
