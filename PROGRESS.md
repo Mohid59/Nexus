@@ -2,6 +2,7 @@
 
 Living status of the Nexus build. **Last updated:** 2026-06-15
 **Repo:** https://github.com/Mohid59/Nexus · **Latest tag:** `phase-3`
+**Live:** app → https://nexus-eta-puce-37.vercel.app · API → https://nexus-api-msck.onrender.com/api/docs (Vercel + Render + MongoDB Atlas)
 
 Legend: ✅ done & verified · 🟡 partial / manual-check needed · ⬜ not started
 
@@ -21,7 +22,7 @@ Legend: ✅ done & verified · 🟡 partial / manual-check needed · ⬜ not sta
 | Security hardening | ✅ | helmet/CORS/sanitize/rate-limit/zod + **2FA email OTP** |
 | Redesigned, cohesive UI | ✅ | "Trust & Capital" + dark mode + editorial redesign |
 | Swagger + Postman docs | ✅ | `/api/docs` full spec + `server/docs/*.postman_collection.json` |
-| Vercel + Render deploy configs + README | 🟡 | `render.yaml` + `vercel.json` + README ready; not yet deployed |
+| Vercel + Render deploy configs + README | ✅ | **Live** — Vercel (web) + Render (API) + Atlas (DB); verified end-to-end |
 | Weekly progress notes in `/docs` | ✅ | `docs/phase-1.md`, `phase-2.md`, `phase-3.md` |
 
 ---
