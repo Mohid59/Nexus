@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MessageCircle, Users, Calendar, Building2, MapPin, UserCircle, FileText, DollarSign, Send } from 'lucide-react';
 import { Avatar } from '../../components/ui/Avatar';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
+import { Skeleton } from '../../components/ui/Skeleton';
 import { useAuth } from '../../context/AuthContext';
-import { findUserById } from '../../data/users';
+import { api } from '../../lib/api';
 import { createCollaborationRequest, getRequestsFromInvestor } from '../../data/collaborationRequests';
 import { Entrepreneur } from '../../types';
 
@@ -14,10 +15,53 @@ export const EntrepreneurProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user: currentUser } = useAuth();
   
-  // Fetch entrepreneur data
-  const entrepreneur = findUserById(id || '') as Entrepreneur | null;
+  const [entrepreneur, setEntrepreneur] = useState<Entrepreneur | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    setLoading(true);
+    api
+      .get(`/users/${id}`)
+      .then(({ data }) => {
+        if (!active) return;
+        const u = data.user;
+        if (u.role !== 'entrepreneur') {
+          setEntrepreneur(null);
+          return;
+        }
+        setEntrepreneur({
+          ...u,
+          startupName: u.startupName ?? 'Unnamed startup',
+          pitchSummary: u.pitchSummary ?? '',
+          fundingNeeded: u.fundingNeeded ?? 'N/A',
+          industry: u.industry ?? 'N/A',
+          location: u.location ?? 'N/A',
+          foundedYear: u.foundedYear ?? 0,
+          teamSize: u.teamSize ?? 0,
+        });
+      })
+      .catch(() => {
+        if (active) setEntrepreneur(null);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <Skeleton className="h-40 w-full" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    );
+  }
   
-  if (!entrepreneur || entrepreneur.role !== 'entrepreneur') {
+  if (!entrepreneur) {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-ink">Entrepreneur not found</h2>

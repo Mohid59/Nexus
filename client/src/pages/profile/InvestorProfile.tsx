@@ -1,33 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MessageCircle, Building2, MapPin, UserCircle, BarChart3, Briefcase } from 'lucide-react';
 import { Avatar } from '../../components/ui/Avatar';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
+import { Skeleton } from '../../components/ui/Skeleton';
 import { useAuth } from '../../context/AuthContext';
-import { findUserById } from '../../data/users';
+import { api } from '../../lib/api';
 import { Investor } from '../../types';
 
 export const InvestorProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user: currentUser } = useAuth();
-  
-  // Fetch investor data
-  const investor = findUserById(id || '') as Investor | null;
-  
-  if (!investor || investor.role !== 'investor') {
+  const [investor, setInvestor] = useState<Investor | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    setLoading(true);
+    api
+      .get(`/users/${id}`)
+      .then(({ data }) => {
+        if (!active) return;
+        const u = data.user;
+        if (u.role !== 'investor') {
+          setInvestor(null);
+          return;
+        }
+        setInvestor({
+          ...u,
+          investmentInterests: u.investmentInterests ?? [],
+          investmentStage: u.investmentStage ?? [],
+          portfolioCompanies: u.portfolioCompanies ?? [],
+          totalInvestments: u.totalInvestments ?? 0,
+          minimumInvestment: u.minimumInvestment ?? 'N/A',
+          maximumInvestment: u.maximumInvestment ?? 'N/A',
+        });
+      })
+      .catch(() => {
+        if (active) setInvestor(null);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <Skeleton className="h-40 w-full" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    );
+  }
+
+  if (!investor) {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-ink">Investor not found</h2>
         <p className="text-muted mt-2">The investor profile you're looking for doesn't exist or has been removed.</p>
-        <Link to="/dashboard/entrepreneur">
+        <Link to="/dashboard/investor">
           <Button variant="outline" className="mt-4">Back to Dashboard</Button>
         </Link>
       </div>
     );
   }
-  
+
   const isCurrentUser = currentUser?.id === investor.id;
   
   return (
